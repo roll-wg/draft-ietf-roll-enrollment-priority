@@ -1,4 +1,4 @@
-DRAFT:=dtsecurity-secure-join
+DRAFT:=6lo-ra-in-ie
 VERSION:=$(shell ./getver ${DRAFT}.mkd )
 
 ${DRAFT}-${VERSION}.txt: ${DRAFT}.txt
@@ -14,7 +14,6 @@ ${DRAFT}-${VERSION}.txt: ${DRAFT}.txt
 
 %.html: %.xml
 	unset DISPLAY; XML_LIBRARY=$(XML_LIBRARY):./src xml2rfc --html -o $@ $?
-
 
 version:
 	echo Version: ${VERSION}

@@ -1,0 +1,224 @@
+
+
+
+
+6lo Working Group                                          M. Richardson
+Internet-Draft                                  Sandelman Software Works
+Intended status: Informational                          October 17, 2016
+Expires: April 20, 2017
+
+
+     802.15.4 Informational Element encapsulation of ICMPv6 Router
+                             Advertisements
+                    draft-richardson-6lo-ra-in-ie-00
+
+Abstract
+
+   In TSCH mode of 802.15.4, as described by [I-D.ietf-6tisch-minimal],
+   opportunities for broadcasts are limited to specific times and
+   specific channels.  An enhanced beacon must be broadcast periodically
+   by every router to keep all nodes in sync.  This document provides a
+   mechanism by which other small ICMPv6 packets, such as Router
+   Advertisements may be carried within the Enhanced Beacon, providing
+   standard IPv6 router/host protocol.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on April 20, 2017.
+
+Copyright Notice
+
+   Copyright (c) 2016 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+
+
+
+Richardson               Expires April 20, 2017                 [Page 1]
+
+Internet-Draf802.15.4 Informational Element encapsulation o October 2016
+
+
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+     1.1.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   2
+   2.  Protocol Definition . . . . . . . . . . . . . . . . . . . . .   2
+   3.  Security Considerations . . . . . . . . . . . . . . . . . . .   2
+   4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   2
+   5.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   2
+     5.1.  Normative References  . . . . . . . . . . . . . . . . . .   3
+     5.2.  Informative References  . . . . . . . . . . . . . . . . .   3
+   Appendix A.  appendix . . . . . . . . . . . . . . . . . . . . . .   3
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   4
+
+1.  Introduction
+
+   Explain why broadcasts are rare, and why we need them.  What the
+   Enhanced Beacon is, and what Information Elements are, and how the
+   IETF has a subtype for that area.
+
+   Explain what kind of things could be placed in Information Elements,
+   how big they could be, and how they could be compressed.
+
+1.1.  Terminology
+
+   In this document, the key words "MUST", "MUST NOT", "REQUIRED",
+   "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",
+   and "OPTIONAL" are to be interpreted as described in BCP 14, RFC 2119
+   [RFC2119] and indicate requirement levels for compliant STuPiD
+   implementations.
+
+2.  Protocol Definition
+
+3.  Security Considerations
+
+4.  IANA Considerations
+
+   Allocate a new number from Registry FOO.
+
+5.  References
+
+
+
+
+
+
+
+
+Richardson               Expires April 20, 2017                 [Page 2]
+
+Internet-Draf802.15.4 Informational Element encapsulation o October 2016
+
+
+5.1.  Normative References
+
+   [I-D.ietf-6tisch-minimal]
+              Vilajosana, X. and K. Pister, "Minimal 6TiSCH
+              Configuration", draft-ietf-6tisch-minimal-16 (work in
+              progress), June 2016.
+
+   [ieee802154]
+              IEEE Standard, ., "802.15.4-2015 - IEEE Standard for Low-
+              Rate Wireless Personal Area Networks (WPANs)", 2015,
+              <http://standards.ieee.org/findstds/
+              standard/802.15.4-2015.html>.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <http://www.rfc-editor.org/info/rfc2119>.
+
+   [RFC7228]  Bormann, C., Ersue, M., and A. Keranen, "Terminology for
+              Constrained-Node Networks", RFC 7228,
+              DOI 10.17487/RFC7228, May 2014,
+              <http://www.rfc-editor.org/info/rfc7228>.
+
+5.2.  Informative References
+
+   [RFC4191]  Draves, R. and D. Thaler, "Default Router Preferences and
+              More-Specific Routes", RFC 4191, DOI 10.17487/RFC4191,
+              November 2005, <http://www.rfc-editor.org/info/rfc4191>.
+
+   [RFC4655]  Farrel, A., Vasseur, J., and J. Ash, "A Path Computation
+              Element (PCE)-Based Architecture", RFC 4655,
+              DOI 10.17487/RFC4655, August 2006,
+              <http://www.rfc-editor.org/info/rfc4655>.
+
+   [RFC7554]  Watteyne, T., Ed., Palattella, M., and L. Grieco, "Using
+              IEEE 802.15.4e Time-Slotted Channel Hopping (TSCH) in the
+              Internet of Things (IoT): Problem Statement", RFC 7554,
+              DOI 10.17487/RFC7554, May 2015,
+              <http://www.rfc-editor.org/info/rfc7554>.
+
+Appendix A.  appendix
+
+   insert appendix here
+
+
+
+
+
+
+
+
+Richardson               Expires April 20, 2017                 [Page 3]
+
+Internet-Draf802.15.4 Informational Element encapsulation o October 2016
+
+
+Author's Address
+
+   Michael Richardson
+   Sandelman Software Works
+
+   Email: mcr+ietf@sandelman.ca
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Richardson               Expires April 20, 2017                 [Page 4]
