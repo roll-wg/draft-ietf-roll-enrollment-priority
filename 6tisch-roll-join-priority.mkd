@@ -30,15 +30,19 @@ author:
 
 normative:
   RFC2119:
-  RFC6775:
-  RFC2461:
   RFC7554:
   RFC6550:
-  I-D.richardson-6tisch-join-enhanced-beacon-01
+  I-D.richardson-6tisch-join-enhanced-beacon:
   I-D.ietf-6tisch-minimal-security:
+  ieee802154:
+    target: "http://standards.ieee.org/findstds/standard/802.15.4-2015.html"
+    title: "802.15.4-2015 - IEEE Standard for Low-Rate Wireless Personal Area Networks (WPANs)"
+    author:
+      ins: "IEEE Standard"
+    date: 2015
 
 informative:
-  RFC8180:
+  RFC8137:
   I-D.ietf-6tisch-architecture:
   I-D.ietf-6tisch-dtsecurity-secure-join:
   I-D.ietf-6tisch-terminology:
@@ -59,7 +63,7 @@ operation.
 
 {{!RFC7554}} describes the use of the time-slotted channel
 hopping (TSCH) mode of {{ieee802154}}.
-{{!I-D.ietf-6tisch-minimal-security}} and {{!I-D.ietf-6tisch-dtsecurity-secure-join}} describe mechanisms by which a new node (the "pledge)" can use a
+{{!I-D.ietf-6tisch-minimal-security}} and {{I-D.ietf-6tisch-dtsecurity-secure-join}} describe mechanisms by which a new node (the "pledge)" can use a
 friendly router as a Join Proxy.
 {{!I-D.richardson-6tisch-join-enhanced-beacon}} describes an extension to
 the 802.15.4 Enhanced Beacon that is used by a Join Proxy to announce its
@@ -94,8 +98,8 @@ and "OPTIONAL" are to be interpreted as described in BCP 14, RFC 2119
 {{RFC2119}} and indicate requirement levels for compliant STuPiD
 implementations.
 
-In addition, the terminology of {{!I-D.ietf-6tisch-terminology}} and
-from {{!I-D.ietf-anima-voucher}} are used.
+In addition, the terminology of {{I-D.ietf-6tisch-terminology}} and
+from {{I-D.ietf-anima-voucher}} are used.
 
 # Protocol Definition
 
