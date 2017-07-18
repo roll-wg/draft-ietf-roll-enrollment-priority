@@ -1,7 +1,7 @@
 ---
 title: Enabling secure network join in RPL networks
 abbrev: J-Pref DIO
-docname: draft-richardson-6tisch-roll-join-preference-01
+docname: draft-richardson-6tisch-roll-join-priority-01
 
 # stand_alone: true
 
@@ -49,8 +49,8 @@ informative:
 {{!I-D.richardson-6tisch-join-enhanced-beacon}} defines a method by which a
 potential {{!I-D.ietf-6tisch-minimal-security}} can announce itself as a
 available for new Pledges to Join a network.  The announcement includes a
-preference for join.   This document provides a mechanism by which a RPL DODAG
-root can disable join announcements, or adjust the base preference for join
+priority for join.   This document provides a mechanism by which a RPL DODAG
+root can disable join announcements, or adjust the base priority for join
 operation.
 
 --- middle

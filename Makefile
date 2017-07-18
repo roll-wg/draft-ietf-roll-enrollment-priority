@@ -1,4 +1,4 @@
-DRAFT:=6tisch-roll-join-preference
+DRAFT:=6tisch-roll-join-priority
 VERSION:=$(shell ./getver ${DRAFT}.mkd )
 
 ${DRAFT}-${VERSION}.txt: ${DRAFT}.txt
