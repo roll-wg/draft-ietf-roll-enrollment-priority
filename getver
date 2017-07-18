@@ -1,4 +1,4 @@
 #!/bin/sh
 
-sed -n -e'/docname/s,.*6tisch-roll-join-preference-\([0-9]*\).*,\1,p' $*
+sed -n -e'/docname/s,.*draft-.*-\([0-9]*\).*,\1,p' $*
 
