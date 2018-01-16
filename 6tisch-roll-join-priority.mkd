@@ -47,7 +47,7 @@ informative:
   I-D.ietf-6tisch-dtsecurity-secure-join:
   I-D.ietf-6tisch-terminology:
   I-D.ietf-anima-voucher:
-  
+
 --- abstract
 
 {{!I-D.richardson-6tisch-join-enhanced-beacon}} defines a method by which a
@@ -84,11 +84,11 @@ off when no new nodes are expected.
 
 A network operator might also be able to recognize when certain parts of
 the network are overloaded and can not accomodate additional join traffic,
-and it would like to adjust the join priority among all nodes in the subtree 
+and it would like to adjust the join priority among all nodes in the subtree
 of a congested link.
 
-This document describes an RPL DIO option that can be used to announce a 
-minimum join priority.  
+This document describes an RPL DIO option that can be used to announce a
+minimum join priority.
 
 ## Terminology          {#Terminology}
 
@@ -112,12 +112,12 @@ if they observe congestion on the channel used for join traffic.
 (TODO: how much? Do we need to standardize this?)
 
 A 6LR which would otherwise be willing to act as a Join Proxy, will
-examine the minimum priority field, and to that number, add any additional 
+examine the minimum priority field, and to that number, add any additional
 local consideration (such as upstream congestion).
 The resulting priority, if less than 0x7f should enable the Join Proxy function.
 
-        0                   1                   2         
-        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 
+        0                   1                   2
+        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
        |   Type = TBD01|Opt Length = 1|R| min. priority  |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -133,17 +133,17 @@ R
 As per {{!RFC7416}}, RPL control frames either run over a secured layer 2,
 or use the {{!RFC6550}} Secure DIO methods.  This option can be placed into
 either a "clear" (layer-2 secured) DIO, or a layer-3 Secure DIO.  As such
-this option will have both integrity and confidentiality mechanisms applied 
+this option will have both integrity and confidentiality mechanisms applied
 to it.
 
-A malicious node (that was part of the RPL control plane) could see these 
-options and could, based upon the observed minimal join priority signal a 
+A malicious node (that was part of the RPL control plane) could see these
+options and could, based upon the observed minimal join priority signal a
 confederate that it was a good time to send malicious join traffic.
 
-A malicious node (that was part of the RPL control plane) could also send 
-DIOs with a different minimal join priority which would cause downstream 
-mesh routers to change their Join Proxy behaviour.  Lower minimal priorities 
-would cause downstream nodes to accept more pledges than the network was 
+A malicious node (that was part of the RPL control plane) could also send
+DIOs with a different minimal join priority which would cause downstream
+mesh routers to change their Join Proxy behaviour.  Lower minimal priorities
+would cause downstream nodes to accept more pledges than the network was
 expecting, and higher minimal priorities cause the join process to stall.
 
 The use of layer-2 or layer-3 security for RPL control messages prevents
