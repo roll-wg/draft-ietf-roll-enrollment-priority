@@ -88,7 +88,12 @@ and it would like to adjust the join priority among all nodes in the subtree
 of a congested link.
 
 This document describes an RPL DIO option that can be used to announce a
-minimum join priority.
+minimum join priority.  Each potential Join Proxy would this value as a base
+on which to add (decreasing likely hood of attracting traffic) values
+relating to local conditions.
+
+A network operator can set this value to the maximum value allowed,
+effectively disable all new join traffic.
 
 ## Terminology          {#Terminology}
 
@@ -160,7 +165,7 @@ This entry should be called Minimum Join Priority.
 
 # Acknowledgements
 
-none so far.
+This has been reviewed by Pascal Thubert and Thomas Wattenye.
 
 --- back
 
