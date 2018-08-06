@@ -1,7 +1,7 @@
 ---
 title: Enabling secure network join in RPL networks
 abbrev: J-Pref DIO
-docname: draft-richardson-6tisch-roll-join-priority-02
+docname: draft-richardson-6tisch-roll-enrollment-priority-01
 
 # stand_alone: true
 
@@ -32,7 +32,7 @@ normative:
   RFC2119:
   RFC7554:
   RFC6550:
-  I-D.richardson-6tisch-join-enhanced-beacon:
+  I-D.richardson-6tisch-enrollment-enhanced-beacon:
   I-D.ietf-6tisch-minimal-security:
   ieee802154:
     target: "http://standards.ieee.org/findstds/standard/802.15.4-2015.html"

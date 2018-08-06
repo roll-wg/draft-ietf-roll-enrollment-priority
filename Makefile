@@ -1,4 +1,4 @@
-DRAFT:=6tisch-roll-join-priority
+DRAFT:=6tisch-roll-enrollment-priority
 VERSION:=$(shell ./getver ${DRAFT}.mkd )
 
 ${DRAFT}-${VERSION}.txt: ${DRAFT}.txt
@@ -18,7 +18,7 @@ version:
 	echo Version: ${VERSION}
 
 clean:
-	-rm -f ${DRAFT}-${VERSION}.txt ${DRAFT}.txt
+	-rm -f ${DRAFT}-${VERSION}.txt ${DRAFT}.txt ${DRAFT}.xml
 
 submit: ${DRAFT}.xml
 	curl -S -F "user=mcr+ietf@sandelman.ca" -F "xml=@${DRAFT}.xml" https://datatracker.ietf.org/api/submit
