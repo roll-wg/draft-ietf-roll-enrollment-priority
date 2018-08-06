@@ -1,5 +1,5 @@
 ---
-title: Enabling secure network join in RPL networks
+title: Enabling secure network enrollment in RPL networks
 abbrev: J-Pref DIO
 docname: draft-richardson-6tisch-roll-enrollment-priority-01
 
@@ -50,7 +50,7 @@ informative:
 
 --- abstract
 
-{{!I-D.richardson-6tisch-join-enhanced-beacon}} defines a method by which a
+{{!I-D.richardson-6tisch-enrollment-enhanced-beacon}} defines a method by which a
 potential {{!I-D.ietf-6tisch-minimal-security}} can announce itself as a
 available for new Pledges to Join a network.  The announcement includes a
 priority for join.   This document provides a mechanism by which a RPL DODAG
@@ -65,7 +65,7 @@ operation.
 hopping (TSCH) mode of {{ieee802154}}.
 {{!I-D.ietf-6tisch-minimal-security}} and {{I-D.ietf-6tisch-dtsecurity-secure-join}} describe mechanisms by which a new node (the "pledge)" can use a
 friendly router as a Join Proxy.
-{{!I-D.richardson-6tisch-join-enhanced-beacon}} describes an extension to
+{{!I-D.richardson-6tisch-enrollment-enhanced-beacon}} describes an extension to
 the 802.15.4 Enhanced Beacon that is used by a Join Proxy to announce its
 existence such that Pledges can find them.
 
