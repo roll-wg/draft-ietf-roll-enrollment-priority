@@ -4,12 +4,12 @@
 
 6lo Working Group                                          M. Richardson
 Internet-Draft                                  Sandelman Software Works
-Intended status: Informational                            March 19, 2020
-Expires: September 20, 2020
+Intended status: Informational                           August 08, 2019
+Expires: February 9, 2020
 
 
            Enabling secure network enrollment in RPL networks
-                 draft-ietf-roll-enrollment-priority-00
+          draft-richardson-6tisch-roll-enrollment-priority-03
 
 Abstract
 
@@ -35,11 +35,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 20, 2020.
+   This Internet-Draft will expire on February 9, 2020.
 
 Copyright Notice
 
-   Copyright (c) 2020 IETF Trust and the persons identified as the
+   Copyright (c) 2019 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Richardson             Expires September 20, 2020               [Page 1]
+Richardson              Expires February 9, 2020                [Page 1]
 
-Internet-Draft                 J-Pref DIO                     March 2020
+Internet-Draft                 J-Pref DIO                    August 2019
 
 
    the Trust Legal Provisions and are provided without warranty as
@@ -72,7 +72,7 @@ Table of Contents
    6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   4
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   4
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .   4
-     7.2.  Informative References  . . . . . . . . . . . . . . . . .   6
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .   5
    Appendix A.  Change history . . . . . . . . . . . . . . . . . . .   6
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   6
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Richardson             Expires September 20, 2020               [Page 2]
+Richardson              Expires February 9, 2020                [Page 2]
 
-Internet-Draft                 J-Pref DIO                     March 2020
+Internet-Draft                 J-Pref DIO                    August 2019
 
 
    This document describes an RPL DIO option that can be used to
@@ -165,9 +165,9 @@ Internet-Draft                 J-Pref DIO                     March 2020
 
 
 
-Richardson             Expires September 20, 2020               [Page 3]
+Richardson              Expires February 9, 2020                [Page 3]
 
-Internet-Draft                 J-Pref DIO                     March 2020
+Internet-Draft                 J-Pref DIO                    August 2019
 
 
    R  a reserved bit that SHOULD be set to 0 by senders, and MUST be
@@ -221,28 +221,25 @@ Internet-Draft                 J-Pref DIO                     March 2020
 
 
 
-Richardson             Expires September 20, 2020               [Page 4]
+Richardson              Expires February 9, 2020                [Page 4]
 
-Internet-Draft                 J-Pref DIO                     March 2020
+Internet-Draft                 J-Pref DIO                    August 2019
 
 
    [I-D.ietf-6tisch-enrollment-enhanced-beacon]
-              Dujovne, D. and M. Richardson, "IEEE 802.15.4 Information
-              Element encapsulation of 6TiSCH Join and Enrollment
+              Dujovne, D. and M. Richardson, "IEEE802.15.4 Informational
+              Element encapsulation of 6tisch Join and Enrollment
               Information", draft-ietf-6tisch-enrollment-enhanced-
-              beacon-14 (work in progress), February 2020.
+              beacon-02 (work in progress), March 2019.
 
    [I-D.ietf-6tisch-minimal-security]
               Vucinic, M., Simon, J., Pister, K., and M. Richardson,
-              "Constrained Join Protocol (CoJP) for 6TiSCH", draft-ietf-
-              6tisch-minimal-security-15 (work in progress), December
-              2019.
+              "Minimal Security Framework for 6TiSCH", draft-ietf-
+              6tisch-minimal-security-12 (work in progress), July 2019.
 
    [ieee802154]
-              IEEE standard for Information Technology, ., "IEEE Std.
-              802.15.4, Part. 15.4: Wireless Medium Access Control (MAC)
-              and Physical Layer (PHY) Specifications for Low-Rate
-              Wireless Personal Area Networks", n.d.,
+              IEEE Standard, ., "802.15.4-2015 - IEEE Standard for Low-
+              Rate Wireless Personal Area Networks (WPANs)", 2015,
               <http://standards.ieee.org/findstds/
               standard/802.15.4-2015.html>.
 
@@ -270,24 +267,20 @@ Internet-Draft                 J-Pref DIO                     March 2020
               DOI 10.17487/RFC7554, May 2015,
               <https://www.rfc-editor.org/info/rfc7554>.
 
-
-
-
-
-
-
-
-Richardson             Expires September 20, 2020               [Page 5]
-
-Internet-Draft                 J-Pref DIO                     March 2020
-
-
 7.2.  Informative References
 
    [I-D.ietf-6tisch-architecture]
               Thubert, P., "An Architecture for IPv6 over the TSCH mode
-              of IEEE 802.15.4", draft-ietf-6tisch-architecture-28 (work
-              in progress), October 2019.
+              of IEEE 802.15.4", draft-ietf-6tisch-architecture-24 (work
+              in progress), July 2019.
+
+
+
+
+Richardson              Expires February 9, 2020                [Page 5]
+
+Internet-Draft                 J-Pref DIO                    August 2019
+
 
    [I-D.ietf-6tisch-dtsecurity-secure-join]
               Richardson, M., "6tisch Secure Join protocol", draft-ietf-
@@ -333,4 +326,11 @@ Author's Address
 
 
 
-Richardson             Expires September 20, 2020               [Page 6]
+
+
+
+
+
+
+
+Richardson              Expires February 9, 2020                [Page 6]
