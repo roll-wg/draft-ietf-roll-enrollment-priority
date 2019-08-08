@@ -8,13 +8,13 @@ Intended status: Informational                           August 06, 2018
 Expires: February 7, 2019
 
 
-              Enabling secure network join in RPL networks
+           Enabling secure network enrollment in RPL networks
           draft-richardson-6tisch-roll-enrollment-priority-01
 
 Abstract
 
-   [I-D.richardson-6tisch-join-enhanced-beacon] defines a method by
-   which a potential [I-D.ietf-6tisch-minimal-security] can announce
+   [I-D.richardson-6tisch-enrollment-enhanced-beacon] defines a method
+   by which a potential [I-D.ietf-6tisch-minimal-security] can announce
    itself as a available for new Pledges to Join a network.  The
    announcement includes a priority for join.  This document provides a
    mechanism by which a RPL DODAG root can disable join announcements,
@@ -82,9 +82,9 @@ Table of Contents
    (TSCH) mode of [ieee802154].  [I-D.ietf-6tisch-minimal-security] and
    [I-D.ietf-6tisch-dtsecurity-secure-join] describe mechanisms by which
    a new node (the "pledge)" can use a friendly router as a Join Proxy.
-   [I-D.richardson-6tisch-join-enhanced-beacon] describes an extension
-   to the 802.15.4 Enhanced Beacon that is used by a Join Proxy to
-   announce its existence such that Pledges can find them.
+   [I-D.richardson-6tisch-enrollment-enhanced-beacon] describes an
+   extension to the 802.15.4 Enhanced Beacon that is used by a Join
+   Proxy to announce its existence such that Pledges can find them.
 
    It has become clear that not every routing member of the mesh ought
    to announce itself as a Join Proxy.  There are a variety of local
@@ -232,12 +232,6 @@ Internet-Draft                 J-Pref DIO                    August 2018
               Information", draft-richardson-6tisch-enrollment-enhanced-
               beacon-01 (work in progress), April 2018.
 
-   [I-D.richardson-6tisch-join-enhanced-beacon]
-              Dujovne, D. and M. Richardson, "IEEE802.15.4 Informational
-              Element encapsulation of 6tisch Join Information", draft-
-              richardson-6tisch-join-enhanced-beacon-03 (work in
-              progress), January 2018.
-
    [ieee802154]
               IEEE Standard, ., "802.15.4-2015 - IEEE Standard for Low-
               Rate Wireless Personal Area Networks (WPANs)", 2015,
@@ -275,17 +269,18 @@ Internet-Draft                 J-Pref DIO                    August 2018
               of IEEE 802.15.4", draft-ietf-6tisch-architecture-14 (work
               in progress), April 2018.
 
+   [I-D.ietf-6tisch-dtsecurity-secure-join]
+              Richardson, M., "6tisch Secure Join protocol", draft-ietf-
+              6tisch-dtsecurity-secure-join-01 (work in progress),
+              February 2017.
+
+
 
 
 Richardson              Expires February 7, 2019                [Page 5]
 
 Internet-Draft                 J-Pref DIO                    August 2018
 
-
-   [I-D.ietf-6tisch-dtsecurity-secure-join]
-              Richardson, M., "6tisch Secure Join protocol", draft-ietf-
-              6tisch-dtsecurity-secure-join-01 (work in progress),
-              February 2017.
 
    [I-D.ietf-6tisch-terminology]
               Palattella, M., Thubert, P., Watteyne, T., and Q. Wang,
@@ -312,6 +307,11 @@ Author's Address
    Sandelman Software Works
 
    Email: mcr+ietf@sandelman.ca
+
+
+
+
+
 
 
 
