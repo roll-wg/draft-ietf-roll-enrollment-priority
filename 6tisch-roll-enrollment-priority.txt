@@ -2,14 +2,14 @@
 
 
 
-6lo Working Group                                          M. Richardson
+ROLL Working Group                                         M. Richardson
 Internet-Draft                                  Sandelman Software Works
 Intended status: Informational                            March 19, 2020
 Expires: September 20, 2020
 
 
            Enabling secure network enrollment in RPL networks
-                 draft-ietf-roll-enrollment-priority-00
+                 draft-ietf-roll-enrollment-priority-01
 
 Abstract
 
@@ -72,7 +72,7 @@ Table of Contents
    6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   4
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   4
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .   4
-     7.2.  Informative References  . . . . . . . . . . . . . . . . .   6
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .   5
    Appendix A.  Change history . . . . . . . . . . . . . . . . . . .   6
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   6
 
@@ -124,14 +124,11 @@ Internet-Draft                 J-Pref DIO                     March 2020
 
 1.1.  Terminology
 
-   In this document, the key words "MUST", "MUST NOT", "REQUIRED",
-   "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",
-   and "OPTIONAL" are to be interpreted as described in BCP 14, RFC 2119
-   [RFC2119] and indicate requirement levels for compliant STuPiD
-   implementations.
-
-   In addition, the terminology of [I-D.ietf-6tisch-terminology] and
-   from [RFC8366] are used.
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
 
 2.  Protocol Definition
 
@@ -160,6 +157,9 @@ Internet-Draft                 J-Pref DIO                     March 2020
       Enhanced Beacon Join priority.  A value of 0x7f (127) disables the
       Join Proxy function entirely.
 
+   R  a reserved bit that SHOULD be set to 0 by senders, and MUST be
+      ignored by receivers.  The reserved bit SHOULD be copied to
+      options created.
 
 
 
@@ -169,10 +169,6 @@ Richardson             Expires September 20, 2020               [Page 3]
 
 Internet-Draft                 J-Pref DIO                     March 2020
 
-
-   R  a reserved bit that SHOULD be set to 0 by senders, and MUST be
-      ignored by receivers.  The reserved bit SHOULD be copied to
-      options created.
 
 3.  Security Considerations
 
@@ -214,7 +210,11 @@ Internet-Draft                 J-Pref DIO                     March 2020
 
 7.1.  Normative References
 
-
+   [I-D.ietf-6tisch-enrollment-enhanced-beacon]
+              Dujovne, D. and M. Richardson, "IEEE 802.15.4 Information
+              Element encapsulation of 6TiSCH Join and Enrollment
+              Information", draft-ietf-6tisch-enrollment-enhanced-
+              beacon-14 (work in progress), February 2020.
 
 
 
@@ -225,12 +225,6 @@ Richardson             Expires September 20, 2020               [Page 4]
 
 Internet-Draft                 J-Pref DIO                     March 2020
 
-
-   [I-D.ietf-6tisch-enrollment-enhanced-beacon]
-              Dujovne, D. and M. Richardson, "IEEE 802.15.4 Information
-              Element encapsulation of 6TiSCH Join and Enrollment
-              Information", draft-ietf-6tisch-enrollment-enhanced-
-              beacon-14 (work in progress), February 2020.
 
    [I-D.ietf-6tisch-minimal-security]
               Vucinic, M., Simon, J., Pister, K., and M. Richardson,
@@ -270,17 +264,9 @@ Internet-Draft                 J-Pref DIO                     March 2020
               DOI 10.17487/RFC7554, May 2015,
               <https://www.rfc-editor.org/info/rfc7554>.
 
-
-
-
-
-
-
-
-Richardson             Expires September 20, 2020               [Page 5]
-
-Internet-Draft                 J-Pref DIO                     March 2020
-
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
 7.2.  Informative References
 
@@ -288,6 +274,13 @@ Internet-Draft                 J-Pref DIO                     March 2020
               Thubert, P., "An Architecture for IPv6 over the TSCH mode
               of IEEE 802.15.4", draft-ietf-6tisch-architecture-28 (work
               in progress), October 2019.
+
+
+
+Richardson             Expires September 20, 2020               [Page 5]
+
+Internet-Draft                 J-Pref DIO                     March 2020
+
 
    [I-D.ietf-6tisch-dtsecurity-secure-join]
               Richardson, M., "6tisch Secure Join protocol", draft-ietf-
@@ -319,6 +312,13 @@ Author's Address
    Sandelman Software Works
 
    Email: mcr+ietf@sandelman.ca
+
+
+
+
+
+
+
 
 
 

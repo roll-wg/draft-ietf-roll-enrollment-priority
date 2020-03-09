@@ -2,23 +2,23 @@
 
 
 
-6lo Working Group                                          M. Richardson
+ROLL Working Group                                         M. Richardson
 Internet-Draft                                  Sandelman Software Works
-Intended status: Informational                           August 06, 2018
-Expires: February 7, 2019
+Intended status: Informational                            March 19, 2020
+Expires: September 20, 2020
 
 
            Enabling secure network enrollment in RPL networks
-          draft-richardson-6tisch-roll-enrollment-priority-01
+                 draft-ietf-roll-enrollment-priority-01
 
 Abstract
 
-   [I-D.richardson-6tisch-enrollment-enhanced-beacon] defines a method
-   by which a potential [I-D.ietf-6tisch-minimal-security] can announce
-   itself as a available for new Pledges to Join a network.  The
-   announcement includes a priority for join.  This document provides a
-   mechanism by which a RPL DODAG root can disable join announcements,
-   or adjust the base priority for join operation.
+   [I-D.ietf-6tisch-enrollment-enhanced-beacon] defines a method by
+   which a potential [I-D.ietf-6tisch-minimal-security] join proxy can
+   announce itself as a available for new Pledges to Join a network.
+   The announcement includes a priority for join.  This document
+   provides a mechanism by which a RPL DODAG root can disable join
+   announcements, or adjust the base priority for join operation.
 
 Status of This Memo
 
@@ -28,23 +28,23 @@ Status of This Memo
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
    working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at http://datatracker.ietf.org/drafts/current/.
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
 
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on February 7, 2019.
+   This Internet-Draft will expire on September 20, 2020.
 
 Copyright Notice
 
-   Copyright (c) 2018 IETF Trust and the persons identified as the
+   Copyright (c) 2020 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
+   (https://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Richardson              Expires February 7, 2019                [Page 1]
+Richardson             Expires September 20, 2020               [Page 1]
 
-Internet-Draft                 J-Pref DIO                    August 2018
+Internet-Draft                 J-Pref DIO                     March 2020
 
 
    the Trust Legal Provisions and are provided without warranty as
@@ -82,9 +82,9 @@ Table of Contents
    (TSCH) mode of [ieee802154].  [I-D.ietf-6tisch-minimal-security] and
    [I-D.ietf-6tisch-dtsecurity-secure-join] describe mechanisms by which
    a new node (the "pledge)" can use a friendly router as a Join Proxy.
-   [I-D.richardson-6tisch-enrollment-enhanced-beacon] describes an
-   extension to the 802.15.4 Enhanced Beacon that is used by a Join
-   Proxy to announce its existence such that Pledges can find them.
+   [I-D.ietf-6tisch-enrollment-enhanced-beacon] describes an extension
+   to the 802.15.4 Enhanced Beacon that is used by a Join Proxy to
+   announce its existence such that Pledges can find them.
 
    It has become clear that not every routing member of the mesh ought
    to announce itself as a Join Proxy.  There are a variety of local
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Richardson              Expires February 7, 2019                [Page 2]
+Richardson             Expires September 20, 2020               [Page 2]
 
-Internet-Draft                 J-Pref DIO                    August 2018
+Internet-Draft                 J-Pref DIO                     March 2020
 
 
    This document describes an RPL DIO option that can be used to
@@ -124,14 +124,11 @@ Internet-Draft                 J-Pref DIO                    August 2018
 
 1.1.  Terminology
 
-   In this document, the key words "MUST", "MUST NOT", "REQUIRED",
-   "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",
-   and "OPTIONAL" are to be interpreted as described in BCP 14, RFC 2119
-   [RFC2119] and indicate requirement levels for compliant STuPiD
-   implementations.
-
-   In addition, the terminology of [I-D.ietf-6tisch-terminology] and
-   from [I-D.ietf-anima-voucher] are used.
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
 
 2.  Protocol Definition
 
@@ -160,19 +157,18 @@ Internet-Draft                 J-Pref DIO                    August 2018
       Enhanced Beacon Join priority.  A value of 0x7f (127) disables the
       Join Proxy function entirely.
 
-
-
-
-
-
-Richardson              Expires February 7, 2019                [Page 3]
-
-Internet-Draft                 J-Pref DIO                    August 2018
-
-
    R  a reserved bit that SHOULD be set to 0 by senders, and MUST be
       ignored by receivers.  The reserved bit SHOULD be copied to
       options created.
+
+
+
+
+
+Richardson             Expires September 20, 2020               [Page 3]
+
+Internet-Draft                 J-Pref DIO                     March 2020
+
 
 3.  Security Considerations
 
@@ -214,41 +210,47 @@ Internet-Draft                 J-Pref DIO                    August 2018
 
 7.1.  Normative References
 
+   [I-D.ietf-6tisch-enrollment-enhanced-beacon]
+              Dujovne, D. and M. Richardson, "IEEE 802.15.4 Information
+              Element encapsulation of 6TiSCH Join and Enrollment
+              Information", draft-ietf-6tisch-enrollment-enhanced-
+              beacon-14 (work in progress), February 2020.
+
+
+
+
+
+
+Richardson             Expires September 20, 2020               [Page 4]
+
+Internet-Draft                 J-Pref DIO                     March 2020
+
+
    [I-D.ietf-6tisch-minimal-security]
               Vucinic, M., Simon, J., Pister, K., and M. Richardson,
-              "Minimal Security Framework for 6TiSCH", draft-ietf-
-              6tisch-minimal-security-06 (work in progress), May 2018.
-
-
-
-Richardson              Expires February 7, 2019                [Page 4]
-
-Internet-Draft                 J-Pref DIO                    August 2018
-
-
-   [I-D.richardson-6tisch-enrollment-enhanced-beacon]
-              Dujovne, D. and M. Richardson, "IEEE802.15.4 Informational
-              Element encapsulation of 6tisch Join and Enrollment
-              Information", draft-richardson-6tisch-enrollment-enhanced-
-              beacon-01 (work in progress), April 2018.
+              "Constrained Join Protocol (CoJP) for 6TiSCH", draft-ietf-
+              6tisch-minimal-security-15 (work in progress), December
+              2019.
 
    [ieee802154]
-              IEEE Standard, ., "802.15.4-2015 - IEEE Standard for Low-
-              Rate Wireless Personal Area Networks (WPANs)", 2015,
+              IEEE standard for Information Technology, ., "IEEE Std.
+              802.15.4, Part. 15.4: Wireless Medium Access Control (MAC)
+              and Physical Layer (PHY) Specifications for Low-Rate
+              Wireless Personal Area Networks", n.d.,
               <http://standards.ieee.org/findstds/
               standard/802.15.4-2015.html>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997, <https://www.rfc-
-              editor.org/info/rfc2119>.
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
 
    [RFC6550]  Winter, T., Ed., Thubert, P., Ed., Brandt, A., Hui, J.,
               Kelsey, R., Levis, P., Pister, K., Struik, R., Vasseur,
               JP., and R. Alexander, "RPL: IPv6 Routing Protocol for
               Low-Power and Lossy Networks", RFC 6550,
-              DOI 10.17487/RFC6550, March 2012, <https://www.rfc-
-              editor.org/info/rfc6550>.
+              DOI 10.17487/RFC6550, March 2012,
+              <https://www.rfc-editor.org/info/rfc6550>.
 
    [RFC7416]  Tsao, T., Alexander, R., Dohler, M., Daza, V., Lozano, A.,
               and M. Richardson, Ed., "A Security Threat Analysis for
@@ -259,28 +261,31 @@ Internet-Draft                 J-Pref DIO                    August 2018
    [RFC7554]  Watteyne, T., Ed., Palattella, M., and L. Grieco, "Using
               IEEE 802.15.4e Time-Slotted Channel Hopping (TSCH) in the
               Internet of Things (IoT): Problem Statement", RFC 7554,
-              DOI 10.17487/RFC7554, May 2015, <https://www.rfc-
-              editor.org/info/rfc7554>.
+              DOI 10.17487/RFC7554, May 2015,
+              <https://www.rfc-editor.org/info/rfc7554>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
 7.2.  Informative References
 
    [I-D.ietf-6tisch-architecture]
               Thubert, P., "An Architecture for IPv6 over the TSCH mode
-              of IEEE 802.15.4", draft-ietf-6tisch-architecture-14 (work
-              in progress), April 2018.
+              of IEEE 802.15.4", draft-ietf-6tisch-architecture-28 (work
+              in progress), October 2019.
+
+
+
+Richardson             Expires September 20, 2020               [Page 5]
+
+Internet-Draft                 J-Pref DIO                     March 2020
+
 
    [I-D.ietf-6tisch-dtsecurity-secure-join]
               Richardson, M., "6tisch Secure Join protocol", draft-ietf-
               6tisch-dtsecurity-secure-join-01 (work in progress),
               February 2017.
-
-
-
-
-Richardson              Expires February 7, 2019                [Page 5]
-
-Internet-Draft                 J-Pref DIO                    August 2018
-
 
    [I-D.ietf-6tisch-terminology]
               Palattella, M., Thubert, P., Watteyne, T., and Q. Wang,
@@ -288,14 +293,14 @@ Internet-Draft                 J-Pref DIO                    August 2018
               draft-ietf-6tisch-terminology-10 (work in progress), March
               2018.
 
-   [I-D.ietf-anima-voucher]
-              Watsen, K., Richardson, M., Pritikin, M., and T. Eckert,
-              "Voucher Profile for Bootstrapping Protocols", draft-ietf-
-              anima-voucher-07 (work in progress), January 2018.
-
    [RFC8137]  Kivinen, T. and P. Kinney, "IEEE 802.15.4 Information
               Element for the IETF", RFC 8137, DOI 10.17487/RFC8137, May
               2017, <https://www.rfc-editor.org/info/rfc8137>.
+
+   [RFC8366]  Watsen, K., Richardson, M., Pritikin, M., and T. Eckert,
+              "A Voucher Artifact for Bootstrapping Protocols",
+              RFC 8366, DOI 10.17487/RFC8366, May 2018,
+              <https://www.rfc-editor.org/info/rfc8366>.
 
 Appendix A.  Change history
 
@@ -328,9 +333,4 @@ Author's Address
 
 
 
-
-
-
-
-
-Richardson              Expires February 7, 2019                [Page 6]
+Richardson             Expires September 20, 2020               [Page 6]
