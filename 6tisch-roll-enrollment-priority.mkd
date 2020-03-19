@@ -32,7 +32,7 @@ normative:
   RFC2119:
   RFC7554:
   RFC6550:
-  I-D.6tisch-enrollment-enhanced-beacon:
+  I-D.ietf-6tisch-enrollment-enhanced-beacon:
   I-D.ietf-6tisch-minimal-security:
   ieee802154:
     target: "http://standards.ieee.org/findstds/standard/802.15.4-2015.html"
@@ -45,12 +45,12 @@ informative:
   I-D.ietf-6tisch-architecture:
   I-D.ietf-6tisch-dtsecurity-secure-join:
   I-D.ietf-6tisch-terminology:
-  I-D.ietf-anima-voucher:
+  RFC8366:
 
 --- abstract
 
-{{!I-D.6tisch-enrollment-enhanced-beacon}} defines a method by which a
-potential {{!I-D.ietf-6tisch-minimal-security}} can announce itself as a
+{{!I-D.ietf-6tisch-enrollment-enhanced-beacon}} defines a method by which a
+potential {{!I-D.ietf-6tisch-minimal-security}} join proxy can announce itself as a
 available for new Pledges to Join a network.  The announcement includes a
 priority for join.   This document provides a mechanism by which a RPL DODAG
 root can disable join announcements, or adjust the base priority for join
@@ -64,7 +64,7 @@ operation.
 hopping (TSCH) mode of {{ieee802154}}.
 {{!I-D.ietf-6tisch-minimal-security}} and {{I-D.ietf-6tisch-dtsecurity-secure-join}} describe mechanisms by which a new node (the "pledge)" can use a
 friendly router as a Join Proxy.
-{{!I-D.6tisch-enrollment-enhanced-beacon}} describes an extension to
+{{!I-D.ietf-6tisch-enrollment-enhanced-beacon}} describes an extension to
 the 802.15.4 Enhanced Beacon that is used by a Join Proxy to announce its
 existence such that Pledges can find them.
 
@@ -103,7 +103,7 @@ and "OPTIONAL" are to be interpreted as described in BCP 14, RFC 2119
 implementations.
 
 In addition, the terminology of {{I-D.ietf-6tisch-terminology}} and
-from {{I-D.ietf-anima-voucher}} are used.
+from {{RFC8366}} are used.
 
 # Protocol Definition
 
