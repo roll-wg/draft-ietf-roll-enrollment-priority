@@ -1,17 +1,16 @@
 ---
 title: Enabling secure network enrollment in RPL networks
 abbrev: J-Pref DIO
-docname: draft-ietf-roll-enrollment-priority-00
+docname: draft-ietf-roll-enrollment-priority-01
 
 # stand_alone: true
 
 ipr: trust200902
 area: Internet
-wg: 6lo Working Group
+wg: ROLL Working Group
 kw: Internet-Draft
 cat: info
 
-coding: us-ascii
 pi:    # can use array (if all yes) or hash here
 #  - toc
 #  - sortrefs
@@ -96,14 +95,7 @@ effectively disable all new join traffic.
 
 ## Terminology          {#Terminology}
 
-In this document, the key words "MUST", "MUST NOT", "REQUIRED",
-"SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",
-and "OPTIONAL" are to be interpreted as described in BCP 14, RFC 2119
-{{RFC2119}} and indicate requirement levels for compliant STuPiD
-implementations.
-
-In addition, the terminology of {{I-D.ietf-6tisch-terminology}} and
-from {{RFC8366}} are used.
+{::boilerplate bcp14}
 
 # Protocol Definition
 
