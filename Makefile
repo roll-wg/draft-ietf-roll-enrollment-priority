@@ -3,7 +3,7 @@ VERSION:=$(shell ./getver ${DRAFT}.mkd )
 
 ${DRAFT}-${VERSION}.txt: ${DRAFT}.txt
 	cp ${DRAFT}.txt ${DRAFT}-${VERSION}.txt
-	git add ${DRAFT}-${VERSION}.txt ${DRAFT}.txt
+	: git add ${DRAFT}-${VERSION}.txt ${DRAFT}.txt
 
 %.xml: %.mkd
 	kramdown-rfc2629 ${DRAFT}.mkd >${DRAFT}.xml
