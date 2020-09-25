@@ -1,15 +1,13 @@
 ---
-title: Enabling secure network enrollment in RPL networks
-abbrev: J-Pref DIO
+title: Controlling Secure Network Enrollment in RPL networks
+abbrev:
 docname: draft-ietf-roll-enrollment-priority-03
-
-# stand_alone: true
 
 ipr: trust200902
 area: Internet
 wg: ROLL Working Group
 kw: Internet-Draft
-cat: info
+cat: std
 
 pi:    # can use array (if all yes) or hash here
 #  - toc
@@ -54,7 +52,7 @@ informative:
 --- abstract
 
 {{!I-D.ietf-6tisch-enrollment-enhanced-beacon}} defines a method by which a
-potential {{!I-D.ietf-6tisch-minimal-security}} join proxy can announce itself as a
+potential {{!I-D.ietf-6tisch-minimal-security}} enrollment proxy can announce itself as a
 available for new Pledges to enroll on a network.
 The announcement includes a priority for enrollment.
 This document provides a mechanism by which a RPL DODAG root can disable enrollment announcements, or adjust the base priority for enrollment operation.
@@ -75,15 +73,15 @@ The term (1)"Join" has been used in documents like {{!I-D.ietf-6tisch-minimal-se
 This typically involves a cryptographic authentication protocol in which a network credential is provided.
 
 In the context of the {{!RFC6550}} RPL protocol, the term (2)"Join" has an alternate meaning: that of a node (already authenticating to the network, and already authorized to be a member of the network), deciding which part of the RPL DODAG to attach to.
-The term "Join" has to do with parent selection processes.
+This term "Join" has to do with parent selection processes.
 
 In order to avoid the ambiguity of this term, this document refers to the process (1)"Join" as enrollment, leaving the term "Join" to mean (2)"Join".
-The term "onboarding" (or IoT Onboarding) is sometimes used to describe this process.
-The term Join Proxy is retained with it's meaning from {{!I-D.ietf-6tisch-minimal-security}}.
+The term "onboarding" (or IoT Onboarding) is sometimes used to describe the enrollment process.
+However, the term *Join Proxy* is retained with it's meaning from {{!I-D.ietf-6tisch-minimal-security}}.
 
-It has become clear that not every routing member of the mesh ought to announce itself as a Join Proxy.
-There are a variety of local reasons by which a 6LR might not want to provide the Join Proxy function.
-They include available battery power,  already committed network bandwidth, and also total available memory available for Join proxy neighbor cache slots.
+It has become clear that not every routing member of the mesh ought to announce itself as a *Join Proxy*.
+There are a variety of local reasons by which a 6LR might not want to provide the *Join Proxy* function.
+They include available battery power,  already committed network bandwidth, and also total available memory available for Neighbor Cache Entry slots.
 
 There are other situations where the operator of the network would like to selective enable or disable the enrollment process in a particular DODAG.
 
@@ -92,7 +90,7 @@ As the enrollment process involves permitting unencrypted traffic into the best 
 A network operator might also be able to recognize when certain parts of the network are  overloaded and can not accomodate additional enrollment traffic, and it would like to adjust the enrollment priority (the proxy priority field of {{!I-D.ietf-6tisch-enrollment-enhanced-beacon}}) among all nodes in the subtree of a congested link.
 
 This document describes an RPL DIO option that can be used to announce a minimum enrollment priority.
-Each potential Join Proxy would this value as a base on which to add values relating to local conditions.
+Each potential *Join Proxy* would this value as a base on which to add values relating to local conditions.
 As explained in {{!I-D.ietf-6tisch-enrollment-enhanced-beacon}}, higher values decrease the likelyhood of an unenrolled node sending enrollment traffic via this path.
 
 A network operator can set this value to the maximum value allowed, effectively disable all new enrollment traffic.
@@ -103,18 +101,17 @@ A network operator can set this value to the maximum value allowed, effectively 
 
 # Protocol Definition
 
-The following option is defined to transmission in the DIO issued by
-the DODAG root.
+The following option is defined to transmission in the DIO issued by the DODAG root.
 It may also be added by a router on part of the sub-tree as a result of some (out of scope for this document) management function.
 
-6LRs that see this DIO Option SHOULD increment their minimum enrollment priority if they observe congestion on the channel used for join traffic.
+6LRs that see this DIO Option SHOULD increment their minimum enrollment priority if they observe congestion on the channel used for enrollment traffic.
 The exact mechanism is a local decision, and may be the subject for future work.
 
-A 6LR which would otherwise be willing to act as a Join Proxy, will examine the minimum priority field, and to that number, add any additional local consideration (such as upstream congestion).
+A 6LR which would otherwise be willing to act as a *Join Proxy*, will examine the minimum priority field, and to that number, add any additional local consideration (such as upstream congestion).
 
-The Join Priority can only be increased by each each 6LR in value, to the maximum value of 0x7f.
+The Enrollment Priority can only be increased by each 6LR in value, to the maximum value of 0x7f.
 
-The resulting priority, if less than 0x7f should enable the Join Proxy function.
+The resulting priority, if less than 0x7f should enable the *Join Proxy* function.
 
         0                   1                   2
         0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
@@ -123,7 +120,7 @@ The resulting priority, if less than 0x7f should enable the Join Proxy function.
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 min.priority
-: a 7 bit field which provides a base value for the Enhanced Beacon Join priority.  A value of 0x7f (127) disables the Join Proxy function entirely.
+: a 7 bit field which provides a base value for the Enhanced Beacon Join priority.  A value of 0x7f (127) disables the *Join Proxy* function entirely.
 
 R
 : a reserved bit that SHOULD be set to 0 by senders, and MUST be ignored by receivers.
@@ -144,28 +141,29 @@ The nodes then adjust this base value based upon their observed congestion, emit
 
 A 6LR downstream of a 6LR where there was an interruption in the telemetry could err in two directions:
 * if the value implied by the base value of 0x40 was too low, then a 6LR might continue to attract enrollment traffic when none should have been collected.  This is a stressor for the network, but this would also be what would occur without this option at all.
-* if the value implied by the base value of 0x40 was too high, then a 6LR might deflect enrollment traffic to other parts of the DODAG tree, possibly refusing any enrollment traffic at all.  In order for this to happen, some significant congestion must be seen in the sub-tree where the implied 0x40 was introduced. The 0x40 is only the half-way point, so if such an amount of congestion was present, then this sub-tree of the DODAG simply winds up being more cautious than it needed to be.
+* if the value implied by the base value of 0x40 was too high, then a 6LR might deflect enrollment traffic to other parts of the DODAG tree, possibly refusing any enrollment traffic at all.  In order for this to happen, some significant congestion must be seen in the sub-tree where the implied 0x40 was introduced.
+The 0x40 is only the half-way point, so if such an amount of congestion was present, then this sub-tree of the DODAG simply winds up being more cautious than it needed to be.
 
 It is possible that the temporal alternation of the above two situations might introduce cycles of accepting and then rejecting enrollment traffic.
 This is something an operator should consider if when they incrementally deploy this option to an existing LLN.
 In addition, an operator would be unable to turn off enrollment traffic by sending a maximum value enrollment priority to the sub-tree.
-This situation is unfortunately, but would be exactly the situation without this option.
+This situation is unfortunate, but without this option, the the situation would occur all over the DODAG, rather than just in the sub-tree where the option was omitted.
 
 # Security Considerations
 
-As per {{!RFC7416}}, RPL control frames either run over a secured layer 2,
-or use the {{!RFC6550}} Secure DIO methods.
+As per {{!RFC7416}}, RPL control frames either run over a secured layer 2, or use the {{!RFC6550}} Secure DIO methods.
 This option can be placed into either a "clear" (layer-2 secured) DIO, or a layer-3 Secure DIO.  As such this option will have both integrity and confidentiality mechanisms applied to it.
 
 A malicious node (that was part of the RPL control plane) could see these options and could, based  upon the observed minimal enrollment priority signal a confederate that it was a good time to send malicious join traffic.
 
-A malicious node (that was part of the RPL control plane) could also send DIOs with a different minimal enrollment priority which would cause downstream mesh routers to change their Join Proxy  behaviour.
+Such as a malicious node, being already part of the RPL control plane, could also send DIOs with a different minimal enrollment priority which would cause downstream mesh routers to change their *Join Proxy*  behaviour.
+
 Lower minimal priorities would cause downstream nodes to accept more pledges than the network was
-expecting, and higher minimal priorities cause the join process to stall.
+expecting, and higher minimal priorities cause the enrollment process to stall.
 
 The use of layer-2 or layer-3 security for RPL control messages prevents the above two attacks, by preventing malicious nodes from becoming part of the control plane.
 A node that is attacked and has malware placed on it creates vulnerabilities in the same way such an attack on any node involved in Internet routing protocol does.
-The rekeying provisions of {{!I-D.ietf-6tisch-minimal-security}} exist to permit an operator to remove such nodes from the network.
+The rekeying provisions of {{!I-D.ietf-6tisch-minimal-security}} exist to permit an operator to remove such nodes from the network easily.
 
 # Privacy Considerations
 
