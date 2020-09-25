@@ -1,7 +1,7 @@
 ---
 title: Enabling secure network enrollment in RPL networks
 abbrev: J-Pref DIO
-docname: draft-ietf-roll-enrollment-priority-02
+docname: draft-ietf-roll-enrollment-priority-03
 
 # stand_alone: true
 
@@ -26,6 +26,11 @@ author:
         org: Sandelman Software Works
         email: mcr+ietf@sandelman.ca
 
+      -
+        ins: R.A. Jadhav
+        name: Rahul Arvind Jadhav
+        org: Huawei Tech
+        email: rahul.ietf@gmail.com
 
 normative:
   RFC2119:
