@@ -16,7 +16,7 @@ Abstract
 
    [I-D.ietf-6tisch-enrollment-enhanced-beacon] defines a method by
    which a potential [I-D.ietf-6tisch-minimal-security] enrollment proxy
-   can announce itself as a available for new Pledges to enroll on a
+   can announce itself as available for new Pledges to enroll on a
    network.  The announcement includes a priority for enrollment.  This
    document provides a mechanism by which a RPL DODAG root can disable
    enrollment announcements, or adjust the base priority for enrollment
@@ -125,7 +125,7 @@ Internet-DraftControlling Secure Network Enrollment in RPLSeptember 2020
    Neighbor Cache Entry slots.
 
    There are other situations where the operator of the network would
-   like to selective enable or disable the enrollment process in a
+   like to selectively enable or disable the enrollment process in a
    particular DODAG.
 
    As the enrollment process involves permitting unencrypted traffic
@@ -133,7 +133,7 @@ Internet-DraftControlling Secure Network Enrollment in RPLSeptember 2020
    have the enrollment process off when no new nodes are expected.
 
    A network operator might also be able to recognize when certain parts
-   of the network are overloaded and can not accomodate additional
+   of the network are overloaded and cannot accomodate additional
    enrollment traffic, and it would like to adjust the enrollment
    priority (the proxy priority field of
    [I-D.ietf-6tisch-enrollment-enhanced-beacon]) among all nodes in the
@@ -141,14 +141,14 @@ Internet-DraftControlling Secure Network Enrollment in RPLSeptember 2020
 
    This document describes an RPL DIO option that can be used to
    announce a minimum enrollment priority.  Each potential _Join Proxy_
-   would this value as a base on which to add values relating to local
+   would use this value as a base on which to add values relating to local
    conditions.  As explained in
    [I-D.ietf-6tisch-enrollment-enhanced-beacon], higher values decrease
    the likelyhood of an unenrolled node sending enrollment traffic via
    this path.
 
    A network operator can set this value to the maximum value allowed,
-   effectively disable all new enrollment traffic.
+   effectively disabling all new enrollment traffic.
 
 1.1.  Terminology
 
@@ -172,7 +172,7 @@ Internet-DraftControlling Secure Network Enrollment in RPLSeptember 2020
 
 2.  Protocol Definition
 
-   The following option is defined to transmission in the DIO issued by
+   The following option is defined to be transmitted in the DIO issued by
    the DODAG root.  It may also be added by a router on part of the sub-
    tree as a result of some (out of scope for this document) management
    function.
@@ -251,7 +251,7 @@ Internet-DraftControlling Secure Network Enrollment in RPLSeptember 2020
    when they incrementally deploy this option to an existing LLN.  In
    addition, an operator would be unable to turn off enrollment traffic
    by sending a maximum value enrollment priority to the sub-tree.  This
-   situation is unfortunate, but without this option, the the situation
+   situation is unfortunate, but without this option, the situation
    would occur all over the DODAG, rather than just in the sub-tree
    where the option was omitted.
 
