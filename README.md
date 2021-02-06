@@ -25,4 +25,6 @@ including, BCP 78, 79, the TLP, and the TLP rules regarding code
 components (e.g. being subject to a Simplified BSD License) in
 Contributions.
 
+IETF Policies - Please read the note-well https://www.ietf.org/about/note-well/ before participation.
+
 
