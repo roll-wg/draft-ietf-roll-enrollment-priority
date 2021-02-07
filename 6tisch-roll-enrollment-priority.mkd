@@ -1,6 +1,6 @@
 ---
 title: Controlling Secure Network Enrollment in RPL networks
-abbrev:
+abbrev: join-metric
 docname: draft-ietf-roll-enrollment-priority-04
 
 ipr: trust200902
@@ -55,11 +55,7 @@ normative:
       ins: "IEEE standard for Information Technology"
 
 informative:
-  RFC8137:
-  I-D.ietf-6tisch-architecture:
   I-D.ietf-6tisch-dtsecurity-secure-join:
-  I-D.ietf-6tisch-terminology:
-  RFC8366:
 
 --- abstract
 
