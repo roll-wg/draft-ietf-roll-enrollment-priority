@@ -42,6 +42,11 @@ author:
         org: Cisco Systems
         email: hushe@cisco.com
 
+contributor:
+      -
+        name: Konrad Iwanicki
+        email: iwanicki@mimuw.edu.pl
+
 normative:
   RFC2119:
   RFC7554:
@@ -210,7 +215,7 @@ This entry should be called Minimum Enrollment Priority.
 
 # Acknowledgements
 
-This has been reviewed by Pascal Thubert and Thomas Wattenye.
+This has been reviewed by Konrad Iwanicki and Thomas Wattenye.
 
 --- back
 
