@@ -77,15 +77,7 @@ friendly router as a Join Proxy.
 the 802.15.4 Enhanced Beacon that is used by a Join Proxy to announce its
 existence such that Pledges can find them.
 
-The term (1)"Join" has been used in documents like {{!I-D.ietf-6tisch-minimal-security}} to denote the activity of a new node authenticating itself to the network in order to obtain authorization to become a member of the network.
-This typically involves a cryptographic authentication protocol in which a network credential is provided.
-
-In the context of the {{!RFC6550}} RPL protocol, the term (2)"Join" has an alternate meaning: that of a node (already authenticating to the network, and already authorized to be a member of the network), deciding which part of the RPL DODAG to attach to.
-This term "Join" has to do with parent selection processes.
-
-In order to avoid the ambiguity of this term, this document refers to the process (1)"Join" as enrollment, leaving the term "Join" to mean (2)"Join".
-The term "onboarding" (or IoT Onboarding) is sometimes used to describe the enrollment process.
-However, the term *Join Proxy* is retained with it's meaning from {{!I-D.ietf-6tisch-minimal-security}}.
+## Motivation and Overview
 
 It has become clear that not every routing member of the mesh ought to announce itself as a *Join Proxy*.
 There are a variety of local reasons by which a 6LR might not want to provide the *Join Proxy* function.
@@ -107,15 +99,23 @@ As explained in {{!I-D.ietf-6tisch-enrollment-enhanced-beacon}}, higher values d
 
 A network operator can set this value to the maximum value allowed, effectively disable all new enrollment traffic.
 
-## Terminology          {#Terminology}
+# Terminology          {#Terminology}
 
 {::boilerplate bcp14}
 
+The term (1)"Join" has been used in documents like {{!I-D.ietf-6tisch-minimal-security}} to denote the activity of a new node authenticating itself to the network in order to obtain authorization to become a member of the network.
+
+In the context of the {{!RFC6550}} RPL protocol, the term (2)"Join" has an alternate meaning: that of a node (already authenticating to the network, and already authorized to be a member of the network), deciding which part of the RPL DODAG to attach to.
+This term "Join" has to do with parent selection processes.
+
+In order to avoid the ambiguity of this term, this document refers to the process (1)"Join" as enrollment, leaving the term "Join" to mean (2)"Join".
+The term "onboarding" (or IoT Onboarding) is sometimes used to describe the enrollment process.
+However, the term *Join Proxy* is retained with it's meaning from {{!I-D.ietf-6tisch-minimal-security}}.
+
+
 # Protocol Definition
 
-The size of the DODAG is measured by the Root based one the DAO activity. It represents a number of routes not a number of nodes, and can only be used to infer a load in an homogeneous network where each node advertises the same number of addresses and generates roughly the same amount of traffic. The size may slightly change between a DIO and the next, so the value transmitted must be considered as an approxmation.
-
-With this specification, the following option is defined for transmission in the DIO issued by the DODAG root and it MUST be propagated down the DODAG without modification.
+With this specification, the following option is defined for transmission in the DIO issued by the DODAG root and it MUST be propagated down the DODAG.
 
 <!--
 It may also be added by a router on part of the sub-tree as a result of some (out of scope for this document) management function.
@@ -156,6 +156,10 @@ This reserved bit SHOULD be copied to options created.
 This document uses the extensions mechanism designed into {{!RFC6550}}.
 It does not need any mechanism to enable it.
 
+The size of the DODAG is measured by the Root based one the DAO activity.
+It represents a number of routes not a number of nodes, and can only be used to infer a load in an  homogeneous network where each node advertises the same number of addresses and generates roughly the same amount of traffic.
+The size may slightly change between a DIO and the next, so the value transmitted must be considered as an approxmation.
+
 Future work like {{?I-D.ietf-roll-capabilities}} will enable collection of capabilities such as this one in reports to the DODAG root.
 
 ## Upwards compatibility
@@ -167,8 +171,11 @@ Children and grandchildren nodes would therefore not receive any telemetry via t
 The nodes then adjust this base value based upon their observed congestion, emitting their adjusted DIO value to their children.
 
 A 6LR downstream of a 6LR where there was an interruption in the telemetry could err in two directions:
+
 * if the value implied by the base value of 0x40 was too low, then a 6LR might continue to attract enrollment traffic when none should have been collected.  This is a stressor for the network, but this would also be what would occur without this option at all.
+
 * if the value implied by the base value of 0x40 was too high, then a 6LR might deflect enrollment traffic to other parts of the DODAG tree, possibly refusing any enrollment traffic at all.  In order for this to happen, some significant congestion must be seen in the sub-tree where the implied 0x40 was introduced.
+
 The 0x40 is only the half-way point, so if such an amount of congestion was present, then this sub-tree of the DODAG simply winds up being more cautious than it needed to be.
 
 It is possible that the temporal alternation of the above two situations might introduce cycles of accepting and then rejecting enrollment traffic.
