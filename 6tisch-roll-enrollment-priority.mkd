@@ -51,7 +51,7 @@ normative:
   RFC2119:
   RFC7554:
   RFC6550:
-  I-D.ietf-6tisch-enrollment-enhanced-beacon:
+  RFC9032:
   I-D.ietf-6tisch-minimal-security:
   ieee802154:
     target: "http://standards.ieee.org/findstds/standard/802.15.4-2015.html"
@@ -64,7 +64,7 @@ informative:
 
 --- abstract
 
-{{!I-D.ietf-6tisch-enrollment-enhanced-beacon}} defines a method by which a
+{{!RFC9032}} defines a method by which a
 potential {{!I-D.ietf-6tisch-minimal-security}} enrollment proxy can announce itself as a
 available for new Pledges to enroll on a network.
 The announcement includes a priority for enrollment.
@@ -78,7 +78,7 @@ This document provides a mechanism by which a RPL DODAG root can disable enrollm
 hopping (TSCH) mode of {{ieee802154}}.
 {{!I-D.ietf-6tisch-minimal-security}} and {{I-D.ietf-6tisch-dtsecurity-secure-join}} describe mechanisms by which a new node (the "pledge)" can use a
 friendly router as a Join Proxy.
-{{!I-D.ietf-6tisch-enrollment-enhanced-beacon}} describes an extension to
+{{!RFC9032}} describes an extension to
 the 802.15.4 Enhanced Beacon that is used by a Join Proxy to announce its
 existence such that Pledges can find them.
 
@@ -92,7 +92,7 @@ There are other situations where the operator of the network would like to selec
 
 As the enrollment process involves permitting unencrypted traffic into the best effort part of a (TSCH) network,  it would be better to have the enrollment process off when no new nodes are expected.
 
-A network operator might also be able to recognize when certain parts of the network are  overloaded and can not accomodate additional enrollment traffic, and it would like to adjust the enrollment priority (the proxy priority field of {{!I-D.ietf-6tisch-enrollment-enhanced-beacon}}) among all nodes in the subtree of a congested link.
+A network operator might also be able to recognize when certain parts of the network are  overloaded and can not accomodate additional enrollment traffic, and it would like to adjust the enrollment priority (the proxy priority field of {{!RFC9032}}) among all nodes in the subtree of a congested link.
 
 This document describes a RPL DIO option that can be used to announce a minimum enrollment priority. The minimum priority expresses the (lack of) willingness by the RPL DODAG globally to accept new joins. It may derive from multiple constaining factors, e.g., the size of the DODAG, the occupancy of the bandwidth at the Root, the memory capacity at the DODAG Root, or an administrative decision.
 
@@ -100,7 +100,7 @@ Each potential *Join Proxy* would this value as a base on which to add values re
 
 When a RPL domain is composed of multiple DODAGs, nodes at the edge of 2 DODAGs may not only join either DODAG but also move from one to the other in order to keep their relative sizes balanced. For this, the approximate knowledge of size of the DODAG is an essential metric. Depending on the network policy, the size of the DODAG may or may not affect the minimum enrollment priority. It would be limiting its value to enforce that one is proportional to the other. This is why the current size of the DODAG is advertised separately in the new option.
 
-As explained in {{!I-D.ietf-6tisch-enrollment-enhanced-beacon}}, higher values decrease the likelyhood of an unenrolled node sending enrollment traffic via this path.
+As explained in {{!RFC9032}}, higher values decrease the likelyhood of an unenrolled node sending enrollment traffic via this path.
 
 A network operator can set this value to the maximum value allowed, effectively disable all new enrollment traffic.
 
