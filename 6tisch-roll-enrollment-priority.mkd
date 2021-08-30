@@ -8,11 +8,9 @@ area: Internet
 wg: ROLL Working Group
 kw: Internet-Draft
 cat: std
+stand_alone: true
 
 pi:    # can use array (if all yes) or hash here
-#  - toc
-#  - sortrefs
-#  - symrefs
   toc: yes
   sortrefs:   # defaults to yes
   symrefs: yes
@@ -111,7 +109,7 @@ A network operator can set this value to the maximum value allowed, effectively 
 The term (1)"Join" has been used in documents like {{!RFC9031}} to denote the activity of a new node authenticating itself to the network in order to obtain authorization to become a member of the network.
 
 In the context of the {{!RFC6550}} RPL protocol, the term (2)"Join" has an alternate meaning: that of a node (already authenticating to the network, and already authorized to be a member of the network), deciding which part of the RPL DODAG to attach to.
-This term "Join" has to do with parent selection processes.
+This term "Join" has to do with preferred parent selection processes.
 
 In order to avoid the ambiguity of this term, this document refers to the process (1)"Join" as enrollment, leaving the term "Join" to mean (2)"Join".
 The term "onboarding" (or IoT Onboarding) is sometimes used to describe the enrollment process.
@@ -172,7 +170,7 @@ Future work like {{?I-D.ietf-roll-capabilities}} will enable collection of capab
 A 6LR which did not support this option would not act on it, or copy it into it's DIO messages.
 Children and grandchildren nodes would therefore not receive any telemetry via that path, and need to assume a default value.
 
-6LRs that support this option, but whose parent does not send it SHOULD assume a value of 0x40 as their base value.
+6LRs that support this option, but whose preferred parent does not send it SHOULD assume a value of 0x40 as their base value.
 The nodes then adjust this base value based upon their observed congestion, emitting their adjusted DIO value to their children.
 
 A 6LR downstream of a 6LR where there was an interruption in the telemetry could err in two directions:
