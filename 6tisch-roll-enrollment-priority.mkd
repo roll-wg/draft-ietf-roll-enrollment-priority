@@ -213,7 +213,7 @@ This entry should be called Minimum Enrollment Priority.
 
 # Acknowledgements
 
-This has been reviewed by Konrad Iwanicki and Thomas Wattenye.
+This has been reviewed by Konrad Iwanicki and Thomas Watteyne.
 
 --- back
 
