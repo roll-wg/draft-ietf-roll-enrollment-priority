@@ -1,7 +1,7 @@
 ---
 title: Controlling Secure Network Enrollment in RPL networks
 abbrev: join-metric
-docname: draft-ietf-roll-enrollment-priority-06
+docname: draft-ietf-roll-enrollment-priority-07
 
 ipr: trust200902
 area: Internet
@@ -51,6 +51,7 @@ normative:
   RFC6550:
   RFC9032:
   RFC9031:
+  RFC9032:
   ieee802154:
     target: "http://standards.ieee.org/findstds/standard/802.15.4-2015.html"
     title: "IEEE Std. 802.15.4, Part. 15.4: Wireless Medium Access Control (MAC) and Physical Layer (PHY) Specifications for Low-Rate Wireless Personal Area Networks"
@@ -58,7 +59,6 @@ normative:
       ins: "IEEE standard for Information Technology"
 
 informative:
-  I-D.ietf-6tisch-dtsecurity-secure-join:
 
 --- abstract
 
@@ -74,7 +74,7 @@ This document provides a mechanism by which a RPL DODAG root can disable enrollm
 
 {{!RFC7554}} describes the use of the time-slotted channel
 hopping (TSCH) mode of {{ieee802154}}.
-{{!RFC9031}} and {{I-D.ietf-6tisch-dtsecurity-secure-join}} describe mechanisms by which a new node (the "pledge)" can use a
+{{!RFC9031}} and {{!RFC9032}} describe mechanisms by which a new node (the "pledge") can use a
 friendly router as a Join Proxy.
 {{!RFC9032}} describes an extension to
 the 802.15.4 Enhanced Beacon that is used by a Join Proxy to announce its
