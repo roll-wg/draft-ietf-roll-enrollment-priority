@@ -119,7 +119,6 @@ In order to avoid the ambiguity of this term, this document refers to the proces
 The term "onboarding" (or IoT Onboarding) is increasingly used to describe what was called enrollment in other documents.
 However, the term *Join Proxy* is retained with its meaning from {{!RFC9031}}.
 
-
 # Protocol Definition
 
 This document uses the extensions mechanism designed into {{!RFC6550}}.
