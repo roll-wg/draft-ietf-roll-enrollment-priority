@@ -82,28 +82,29 @@ There are a variety of local reasons by which a 6LR might not want to provide th
 They include available battery power,  already committed network bandwidth, and total available memory available for Neighbor Cache Entry (NCE) slots.
 An NCE entry is needed in order to maintain communication with the pledge.
 
-There are other situations where the operator of the network would like to selective enable or disable the enrollment process in a particular DODAG.
+There are other situations where the operator of the network would like to selectively enable or disable the enrollment process in a particular DODAG.
 
 As the enrollment process involves permitting unencrypted traffic into the best effort part of a (TSCH) network,  it would be better to have the enrollment process off when no new nodes are expected.
 
 This document describes a RPL DIO option that can be used to set a minimum enrollment priority.
 The minimum priority expresses the (lack of) willingness by the RPL DODAG globally to accept new joins.
 
-It may derive from multiple constaining factors, e.g., the size of the DODAG, the occupancy of the bandwidth at the Root, the memory capacity at the DODAG Root, or an administrative decision.
+It may derive from multiple constraining factors, e.g., the size of the DODAG, the occupancy of the bandwidth at the Root, the memory capacity at the DODAG Root, or an administrative decision.
 
-Each potential *Join Proxy* would this value as a base on which to add values relating to local conditions such as its Rank and number of pending joins, which would degrade even further the willingness to take more joins.
+Each potential *Join Proxy* would utilize this value as a base on which to add values relating to local conditions such as its Rank and number of pending joins, which would degrade even further the willingness to take more joins.
 
 When a RPL domain is composed of multiple DODAGs, nodes at the edge of 2 DODAGs may not only join either DODAG but also move from one to the other in order to keep their relative sizes balanced. For this, the approximate knowledge of size of the DODAG is an essential metric.
 Depending on the network policy, the size of the DODAG may or may not affect the minimum enrollment priority.
 It would be limiting its value to enforce that one is proportional to the other.
 The current size of the DODAG is therefore also advertised in the new option.
 
-As explained in {{!RFC9032}}, higher values decrease the likelyhood of an unenrolled node sending enrollment traffic via this path.
+As explained in {{!RFC9032}}, higher values decrease the likelihood of an unenrolled node sending enrollment traffic via this path.
 
-A network operator can set this value to the maximum value allowed, effectively disable all new enrollment traffic.
+A network operator can set this value to the maximum value allowed, effectively disabling all new enrollment traffic.
 
-Updates to this option propogate slowly through the network according to the trickle algorithm that periodically sends updates.
-The contents of this option are not considered to be a change, and do not reset the trickle timer.
+Updates to the option propagate through the network according to the trickle algorithm.
+The contents of the option are generated at the DODAG Root and do not change at any hop.
+If the contents represent an update that is considered important (e.g., quickly disabling any enrollments), the option can trigger trickle timer resets at the nodes to speed up its propagation.
 
 # Terminology          {#Terminology}
 
@@ -111,21 +112,20 @@ The contents of this option are not considered to be a change, and do not reset 
 
 The term (1)"Join" has been used in documents like {{!RFC9031}} to denote the activity of a new node authenticating itself to the network in order to obtain authorization to become a member of the network.
 
-In the context of the {{!RFC6550}} RPL protocol, the term (2)"Join" has an alternate meaning: that of a node (already authenticating to the network, and already authorized to be a member of the network), deciding which part of the RPL DODAG to attach to.
+In the context of the {{!RFC6550}} RPL protocol, the term (2)"Join" has an alternative meaning: that of a node (already authenticating to the network, and already authorized to be a member of the network), deciding which part of the RPL DODAG to attach to.
 This term "Join" has to do with preferred parent selection processes.
 
 In order to avoid the ambiguity of this term, this document refers to the process (1)"Join" as enrollment, leaving the term "Join" to mean (2)"Join".
 The term "onboarding" (or IoT Onboarding) is increasingly used to describe what was called enrollment in other documents.
-However, the term *Join Proxy* is retained with it's meaning from {{!RFC9031}}.
+However, the term *Join Proxy* is retained with its meaning from {{!RFC9031}}.
 
 
 # Protocol Definition
 
-With this specification, the following option is defined for transmission in the DIO issued by the DODAG root and it MUST be propagated down the DODAG.
+This document uses the extensions mechanism designed into {{!RFC6550}}.
+No mechanism is needed to enable it.
 
-A 6LR which would otherwise be willing to act as a *Join Proxy*, will examine the minimum priority field, and to that number, add any additional local consideration (such as upstream congestion, number of NCE slots available, etc.)
-
-The Enrollment Priority can only be increased by each 6LR in value, to the maximum value of 0x7f.
+## Option Format
 
 The resulting priority, if less than 0x7f should enable the *Join Proxy* function.
 
@@ -138,7 +138,7 @@ The resulting priority, if less than 0x7f should enable the *Join Proxy* functio
        +-+-+-+-+-+-+-+-+
 
 Type
-: To be assigned by IANA
+: to be assigned by IANA.
 
 exp
 :  a 4 bit unsigned integer, indicating the power of 2 that defines the unit of the DODAG Size, such that (unit=2^exp).
@@ -158,7 +158,7 @@ It does not need any mechanism to enable it.
 
 The size of the DODAG is measured by the Root based one the DAO activity.
 It represents a number of routes not a number of nodes, and can only be used to infer a load in a homogeneous network where each node advertises the same number of addresses and generates roughly the same amount of traffic.
-The size may slightly change between a DIO and the next, so the value transmitted must be considered as an approxmation.
+The size may slightly change between a DIO and the next, so the value transmitted MUST be considered as an approximation.
 
 Future work like {{?I-D.ietf-roll-capabilities}} will enable collection of capabilities such as this one in reports to the DODAG root.
 
@@ -167,7 +167,9 @@ Future work like {{?I-D.ietf-roll-capabilities}} will enable collection of capab
 A 6LR which did not support this option would not act on it, or copy it into it's DIO messages.
 Children and grandchildren nodes would therefore not receive any telemetry via that path, and need to assume a default value.
 
-6LRs that support this option, but whose preferred parent does not send it SHOULD assume a value of 0x40 as their base value.
+A 6LR which did not support this option would not act on it or propagate it in its DIO messages.
+In effect, the 6LR's children and grandchildren nodes could not receive any telemetry via that path.
+Therefore, 6LRs that support this option but do not receive it via any path SHOULD assume a default value of 0x40 as their base value for the Enhanced Beacon Join Priority.
 
 A 6LR downstream of a 6LR where there was an interruption in the telemetry could err in two directions:
 
@@ -192,7 +194,7 @@ As such this option will have both integrity and confidentiality mechanisms appl
 
 A malicious node (that was part of the RPL control plane) could see these options and could, based  upon the observed minimal enrollment priority signal a confederate that it was a good time to send malicious join traffic.
 
-Such as a malicious node, being already part of the RPL control plane, could also send DIOs with a different minimal enrollment priority which would cause downstream mesh routers to change their *Join Proxy*  behaviour.
+Such as a malicious node, being already part of the RPL control plane, could also send DIOs with a different minimal enrollment priority which would cause downstream mesh routers to change their *Join Proxy*  behavior.
 
 Lower minimal priorities would cause downstream nodes to accept more pledges than the network was expecting, and higher minimal priorities cause the enrollment process to stall.
 
