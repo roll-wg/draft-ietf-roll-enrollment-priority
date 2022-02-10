@@ -79,23 +79,24 @@ friendly router as a Join Proxy.
 
 It has become clear that not every routing member of the mesh ought to announce itself as a *Join Proxy*.
 There are a variety of local reasons by which a 6LR might not want to provide the *Join Proxy* function.
-They include available battery power,  already committed network bandwidth, and also total available memory available for Neighbor Cache Entry slots.
+They include available battery power,  already committed network bandwidth, and total available memory available for Neighbor Cache Entry (NCE) slots.
+An NCE entry is needed in order to maintain communication with the pledge.
 
 There are other situations where the operator of the network would like to selectively enable or disable the enrollment process in a particular DODAG.
 
 As the enrollment process involves permitting unencrypted traffic into the best effort part of a network,  it would be better to have the enrollment process off when no new nodes are expected.
 
-A network operator might also be able to recognize when certain parts of the network are overloaded and can not accomodate additional enrollment traffic, and it would like to adjust the enrollment priority (the proxy priority field of {{!RFC9032}}) among all nodes in the subtree of a congested link.
+This document describes a RPL DIO option that can be used to set a minimum enrollment priority.
+The minimum priority expresses the (lack of) willingness by the RPL DODAG globally to accept new joins.
 
 It may derive from multiple constraining factors, e.g., the size of the DODAG, the occupancy of the bandwidth at the Root, the memory capacity at the DODAG Root, or an administrative decision.
 
 Each potential *Join Proxy* would utilize this value as a base on which to add values relating to local conditions such as its Rank and number of pending joins, which would degrade even further the willingness to take more joins.
 
-When a RPL domain is composed of multiple DODAGs, nodes at the edge of 2 DODAGs may not only join either DODAG but also move from one to the other in order to keep their relative sizes balanced.
-For this, the approximate knowledge of size of the DODAG is an essential metric.
+When a RPL domain is composed of multiple DODAGs, nodes at the edge of 2 DODAGs may not only join either DODAG but also move from one to the other in order to keep their relative sizes balanced. For this, the approximate knowledge of size of the DODAG is an essential metric.
 Depending on the network policy, the size of the DODAG may or may not affect the minimum enrollment priority.
 It would be limiting its value to enforce that one is proportional to the other.
-This is why the current size of the DODAG is advertised separately in the new option.
+The current size of the DODAG is therefore also advertised in the new option.
 
 As explained in {{!RFC9032}}, higher values decrease the likelihood of an unenrolled node sending enrollment traffic via this path.
 
@@ -118,6 +119,7 @@ In order to avoid the ambiguity of this term, this document refers to the proces
 The term "onboarding" (or IoT Onboarding) is increasingly used to describe what was called enrollment in other documents.
 However, the term *Join Proxy* is retained with its meaning from {{!RFC9031}}.
 
+
 # Protocol Definition
 
 This document uses the extensions mechanism designed into {{!RFC6550}}.
@@ -125,37 +127,33 @@ No mechanism is needed to enable it.
 
 ## Option Format
 
-The resulting priority, if less than 0x7f should enable the *Join Proxy* function.
+The following option is defined for transmission in DIOs issued by the DODAG root to be propagated within the DODAG.
 
         0                   1                   2                   3
         0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |   Type        |Opt Length = 4 |  exp  |     DODAG_Size        |
+       | Type = TBD01  |Opt Length = 4 |Version Number |T| min priority|
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |R| min priority|  priority seq |
-       +-+-+-+-+-+-+-+-+---------------+
+       |  exp  |     DODAG_Size        |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 Type
 : to be assigned by IANA.
 
+Version Number
+: an 8-bit unsigned integer set by the DODAG root and denoting the version number of the contents of the option. The version number is interpreted as a lollipop counter (see Section 7.2 of {{!RFC6550}}).
+
+T
+: a bit indicating whether the particular version of the option is important in that adopting its contents should trigger a trickle timer reset at the node.
+
+min priority
+: a 7-bit field providing a base value for the Enhanced Beacon Join priority.  A value of 0x7f (127) disables the *Join Proxy* function entirely.
+
 exp
-:  a 4 bit unsigned integer, indicating the power of 2 that defines the unit of the DODAG Size, such that (unit=2^exp).
+:  a 4-bit unsigned integer indicating the power of 2 that defines the unit of the DODAG Size, such that (unit=2^exp).
 
 DODAG_Size
-: a 12 bit unsigned integer, expressing the size of the DODAG in units that depend on the exp field. The size of the DODAG is computed as (DAG_Size*2^exp).
-
-min.priority
-: a 7 bit field which provides a base value for the Enhanced Beacon Join priority.  A value of 0x7f (127) disables the *Join Proxy* function entirely.
-
-R
-: a reserved bit that SHOULD be set to 0 by senders, and MUST be ignored by receivers.
-This reserved bit SHOULD be copied to options created.
-
-priority seq
-: an 8-bit lollipop counter, as per {{!RFC6550, Section 7.2}}.  It is initialized to 128 (or greater) when the DODAG root restarts.  This sequence is incremented each time the DODAG root wishes to propogate new values.
-
-This document uses the extensions mechanism designed into {{!RFC6550}}.
-It does not need any mechanism to enable it.
+: a 12-bit unsigned integer expressing the size of the DODAG in units that depend on the exp field. The size of the DODAG is computed as (DAG_Size*2^exp).
 
 The size of the DODAG is measured by the Root based one the DAO activity.
 It represents a number of routes not a number of nodes, and can only be used to infer a load in a homogeneous network where each node advertises the same number of addresses and generates roughly the same amount of traffic.
@@ -163,10 +161,28 @@ The size may slightly change between a DIO and the next, so the value transmitte
 
 Future work like {{?I-D.ietf-roll-capabilities}} will enable collection of capabilities such as this one in reports to the DODAG root.
 
-## Upwards compatibility
+## Option Processing
 
-A 6LR which did not support this option would not act on it, or copy it into it's DIO messages.
-Children and grandchildren nodes would therefore not receive any telemetry via that path, and need to assume a default value.
+The contents of the option MUST be generated by the DODAG Root.
+A 6LR MUST NOT change them when propagating the option.
+
+Whenever the DODAG root changes the values of min priority or DODAG_Size in the option, it MUST also increment the value of Version Number.
+Moreover, if the change is considered important (i.e., it is expected to propagate in the DODAG quickly), the DODAG Root SHOULD also set the T bit to 1; otherwise, it MUST set the bit to 0.
+
+Upon receiving the option, a 6LR first checks the value of the Version Number field in the option, *vr*, versus the value of the Version Number it has last adopted locally, *vl*.
+
+* If *vl* is greater than *vr* (in the lollipop counter order), then the 6LR MUST ignore the received option.
+
+* Otherwise, the 6LR MUST adopt the contents of the option (i.e., the values of Version Number, min priority, DODAG_Size, and the T bit) as its local ones.
+Moreover, if *vl* was smaller than *vr* (in the lollipop counter order) and the T bit in the received option was set, then the 6LR MUST reset its DIO trickle timer.
+
+A 6LR which would otherwise be willing to act as a *Join Proxy*, will examine the locally adopted value of min priority, and to that number, add any additional local consideration (such as upstream congestion, number of NCE slots available, etc.).
+
+The maximum resulting value any 6LR can obtain this way is 0x7f.
+
+The resulting priority, if less than 0x7f, should enable the *Join Proxy* function.
+
+## Upwards Compatibility
 
 A 6LR which did not support this option would not act on it or propagate it in its DIO messages.
 In effect, the 6LR's children and grandchildren nodes could not receive any telemetry via that path.
