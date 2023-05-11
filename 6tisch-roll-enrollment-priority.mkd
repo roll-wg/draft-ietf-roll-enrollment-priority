@@ -1,7 +1,7 @@
 ---
 title: Controlling Secure Network Enrollment in RPL networks
 abbrev: join-metric
-docname: draft-ietf-roll-enrollment-priority-06
+docname: draft-ietf-roll-enrollment-priority-08
 
 ipr: trust200902
 area: Internet
@@ -64,7 +64,7 @@ informative:
 
 {{!RFC9032}} defines a method by which a potential {{!RFC9031}} enrollment proxy can announce itself as a available for new Pledges to enroll on a network.
 The announcement includes a priority for enrollment.
-This document provides a mechanism by which a RPL DODAG root can disable enrollment announcements, or adjust the base priority for enrollment operation.
+This document provides a mechanism by which a RPL DODAG root can disable enrollment announcements, or adjust the base priority for enrollment operations.
 
 --- middle
 
@@ -83,7 +83,7 @@ They include available battery power,  already committed network bandwidth, and 
 
 There are other situations where the operator of the network would like to selectively enable or disable the enrollment process in a particular DODAG.
 
-As the enrollment process involves permitting unencrypted traffic into the best effort part of a (TSCH) network,  it would be better to have the enrollment process off when no new nodes are expected.
+As the enrollment process involves permitting unencrypted traffic into the best effort part of a network,  it would be better to have the enrollment process off when no new nodes are expected.
 
 A network operator might also be able to recognize when certain parts of the network are overloaded and can not accomodate additional enrollment traffic, and it would like to adjust the enrollment priority (the proxy priority field of {{!RFC9032}}) among all nodes in the subtree of a congested link.
 
@@ -130,10 +130,10 @@ The resulting priority, if less than 0x7f should enable the *Join Proxy* functio
         0                   1                   2                   3
         0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |   Type        |Opt Length = 3 |  exp  |     DODAG_Size        |
+       |   Type        |Opt Length = 4 |  exp  |     DODAG_Size        |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |R| min priority|
-       +-+-+-+-+-+-+-+-+
+       |R| min priority|  priority seq |
+       +-+-+-+-+-+-+-+-+---------------+
 
 Type
 : to be assigned by IANA.
@@ -150,6 +150,9 @@ min.priority
 R
 : a reserved bit that SHOULD be set to 0 by senders, and MUST be ignored by receivers.
 This reserved bit SHOULD be copied to options created.
+
+priority seq
+: an 8-bit lollipop counter, as per {{!RFC6550, Section 7.2}}.  It is initialized to 128 (or greater) when the DODAG root restarts.  This sequence is incremented each time the DODAG root wishes to propogate new values.
 
 This document uses the extensions mechanism designed into {{!RFC6550}}.
 It does not need any mechanism to enable it.
