@@ -91,7 +91,7 @@ The minimum priority expresses the (lack of) willingness by the RPL DODAG global
 It may derive from multiple constraining factors, for instance, the size of the DODAG, the occupancy of the bandwidth at the DODAG Root, the memory capacity at the Root, or an administrative decision.
 Each potential *Join Proxy* utilizes this value as a base on which to add values relating to local conditions, such as its Rank and number of pending joins.
 As explained in {{!RFC9032}}, higher values decrease the likelihood of an unenrolled node sending enrollment traffic via this *Join Proxy*.
-In particular, by setting the minimum enrollment priority to to the maximum value allowed, an network operator can globally disable all new enrollment traffic.
+In particular, by setting the minimum enrollment priority to the maximum value allowed, a network operator can globally disable all new enrollment traffic.
 
 Moreover, when a RPL domain is composed of multiple DODAGs, a node at the edge of more than one such DODAG may not only join any of the DODAGs but also move between them in order to keep their relative sizes balanced.
 For this, the approximate knowledge of the size of the DODAGs is also an essential metric.
@@ -128,9 +128,9 @@ The following option is defined for transmission in DIOs issued by the DODAG Roo
         0                   1                   2                   3
         0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       | Type = TBD01  |Opt Length = 4 |Version Number |T| min priority|
+       | Type = TBD01  |Opt Length = 4 |Version Number |T| Min Priority|
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |  exp  |     DODAG Size        |
+       |  Exp  |     DODAG Size        |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 Type
@@ -204,7 +204,7 @@ As per {{!RFC7416}}, RPL control frames either run over a secured layer 2 or use
 This option can be placed into either a "clear" (layer-2 secured) DIO or a layer-3 Secure DIO.
 As such, this option will have both integrity and confidentiality mechanisms applied to it.
 
-A malicious node that was part of the RPL control plane could see these options and could, based upon the observed minimal enrollment priority, signal a confederate that it was a good time to send malicious join traffic.
+A malicious node that was part of the RPL control plane could see these options and, based upon the observed minimal enrollment priority, could signal a confederate that it was a good time to send malicious join traffic.
 
 Such a malicious node, being already part of the RPL control plane, could also send DIOs with a different minimal enrollment priority, which would cause downstream mesh routers to change their *Join Proxy*  behavior: lower minimal priorities would cause downstream nodes to accept more pledges than the network was expecting; higher minimal priorities could cause the enrollment process to stall.
 
