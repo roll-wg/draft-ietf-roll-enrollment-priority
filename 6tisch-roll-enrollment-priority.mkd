@@ -130,8 +130,8 @@ The following option is defined for transmission in DIOs issued by the DODAG Roo
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
        | Type = TBD01  |Opt Length = 4 |Version Number |T| Min Priority|
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |  Exp  |     DODAG Size        |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |  Exp  |DODAGSz|
+       +-+-+-+-+-+-+-+-+
 
 Type
 : To be assigned by IANA.
@@ -148,8 +148,8 @@ Min Priority
 Exp
 : A 4-bit unsigned integer indicating the power of 2 that defines the unit of the DODAG Size, such that (unit = 2^Exp).
 
-DODAG Size
-: A 12-bit unsigned integer expressing the size of the DODAG in units that depend on the Exp field. The size of the DODAG is computed as (DODAG Size * 2^Exp).
+DODAGSz
+: A 4-bit unsigned integer expressing the size of the DODAG in units that depend on the Exp field. The size of the DODAG is computed as (DODAGSz * 2^Exp).
 
 The size of the DODAG can be measured by the Root based on the DAO activity.
 In such a case, it represents the number of routes not the number of nodes, and can thus be used to infer the load only in a network where each node advertises roughly the same number of addresses and generates roughly the same amount of traffic.
