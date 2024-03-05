@@ -26,6 +26,6 @@ clean:
 	-rm -f ${DRAFT}-${VERSION}.txt ${DRAFT}.txt ${DRAFT}.xml
 
 submit: ${DRAFT}.xml
-	curl -S -F "user=mcr+ietf@sandelman.ca" -F "xml=@${DRAFT}.xml" https://datatracker.ietf.org/api/submit
+	curl -s -F "user=mcr+ietf@sandelman.ca" ${REPLACES} -F "xml=@${DRAFT}.xml" https://datatracker.ietf.org/api/submission | jq
 
 .PRECIOUS: ${DRAFT}.xml

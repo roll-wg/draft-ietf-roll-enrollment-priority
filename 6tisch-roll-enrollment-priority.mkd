@@ -71,15 +71,15 @@ This document provides a mechanism by which a RPL DODAG Root can globally disabl
 
 # Introduction        {#problems}
 
-{{!RFC7554}} describes the use of the time-slotted channel hopping (TSCH) mode of {{ieee802154}}.
+{{!RFC7554}} describes the use of the Time-Slotted Channel Hopping (TSCH) mode of {{ieee802154}}.
 {{!RFC9031}} and {{!RFC9032}} describe mechanisms by which a new node (the "pledge") can use a
-friendly router as a Join Proxy.
+nearby router as a Join Proxy.
 {{!RFC9032}} describes an extension to the 802.15.4 Enhanced Beacon that is used by a Join Proxy to announce its existence such that Pledges can find them.
 
 ## Motivation and Overview
 
 It has become clear that not every routing member of the mesh ought to announce itself as a *Join Proxy*.
-There are a variety of local reasons for which a 6LR might not want to provide the *Join Proxy* function.
+There are a variety of local reasons for which a 6LowPAN router (6LR) might not want to provide the *Join Proxy* function.
 They include low available battery power, already high committed network bandwidth, and little free memory for Neighbor Cache Entry (NCE) slots.
 (An NCE entry is needed in order to maintain communication with the pledge.)
 
@@ -105,6 +105,12 @@ If the contents represent an update that is considered important (e.g., quickly 
 # Terminology          {#Terminology}
 
 {::boilerplate bcp14}
+
+The term 6LR means 6LowPAN Router, and is defined in {{?RFC6606}}.
+It refers to a router that forwards packets in a 6LowPAN network.
+
+The terms DODAG, DODAG root, DIO, trickle timer are from {{!RFC6550}}.
+The lollipop counter function comes from {{!RFC6550, Section 7.2}}.
 
 The term (1)"Join" has been used in documents like {{!RFC9031}} to denote the activity of a new node authenticating itself to the network in order to obtain authorization to become a member of the network.
 
