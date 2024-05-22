@@ -112,13 +112,13 @@ It refers to a router that forwards packets in a 6LowPAN network.
 The terms DODAG, DODAG root, DIO, trickle timer are from {{!RFC6550}}.
 The lollipop counter function comes from {{!RFC6550, Section 7.2}}.
 
-The term (1)"Join" has been used in documents like {{!RFC9031}} to denote the activity of a new node authenticating itself to the network in order to obtain authorization to become a member of the network.
+The term (1)"Join" has been used in documents such as {{!RFC9031}} to denote the activity of a new node authenticating itself to the network to obtain authorization to become a member of the network.
 
 In the context of the {{!RFC6550}} RPL protocol, the term (2)"Join" has an alternative meaning: that of a node (already authenticated to the network, and already authorized to be a member of the network), deciding which part of the RPL DODAG to attach to.
 This term "Join" has to do with preferred parent selection processes.
 
 In order to avoid the ambiguity of this term, this document refers to the process (1)"Join" as enrollment, leaving the term "Join" to mean (2)"Join".
-The term "onboarding" (or "IoT Onboarding") is increasingly used to describe what was called enrollment in other documents.
+The term "onboarding" (or "IoT Onboarding") is increasingly used to describe what is now called enrollment in other documents.
 However, the term *Join Proxy* is retained with its (1)"Join" meaning from {{!RFC9031}}.
 
 
@@ -155,13 +155,18 @@ Exp
 : A 4-bit unsigned integer indicating the power of 2 that defines the unit of the DODAG Size, such that (unit = 2^Exp).
 
 DODAGSz
-: A 4-bit unsigned integer expressing the size of the DODAG in units that depend on the Exp field. The size of the DODAG is computed as (DODAGSz * 2^Exp).
+: A 4-bit unsigned integer expressing the size of the DODAG in units that depend on the Exp field.
 
-The size of the DODAG can be measured by the Root based on the DAO activity.
+The DODAG Size is calculated as (DODAGSz * 2^Exp).
+
+The DODAG Size can be measured by the Root based on the DAO activity.
 In such a case, it represents the number of routes not the number of nodes, and can thus be used to infer the load only in a network where each node advertises roughly the same number of addresses and generates roughly the same amount of traffic.
-Future work like {{?I-D.ietf-roll-capabilities}} will enable collection of capabilities such as this one in reports to the DODAG Root.
 
-In any case, the DODAG size may slightly change between a DIO and the next, so the value transmitted MUST be considered as an approximation.
+As the DODAG Size is always a multiple of a power of 2, when the actual size falls between two such values, the DODAG Root is to always round up.
+
+Future work such as {{?I-D.ietf-roll-capabilities}} will enable collection of capabilities such as this one in reports to the DODAG Root.
+
+In any case, the DODAG Size may slightly change between a DIO and the next, so the value transmitted is considered as an approximation.
 
 ## Option Processing
 
@@ -186,7 +191,7 @@ The resulting priority, if less than 0x7f, should enable the *Join Proxy* functi
 
 ## Upwards Compatibility
 
-A 6LR which did not support this option would not act on it or propagate it in its DIO messages.
+A 6LR that did not support this option would not act on it or propagate it in its DIO messages.
 In effect, the 6LR's children and grandchildren nodes could not receive any telemetry.
 Therefore, 6LRs that support this option but do not receive it via any path SHOULD assume a default value of 0x40 as their base value for the Enhanced Beacon Join Priority.
 
@@ -202,7 +207,7 @@ The 0x40 is only the half-way point, so if such an amount of congestion was pres
 It is possible that the temporal alternation of the above two situations might introduce cycles of accepting and then rejecting enrollment traffic.
 This is something an operator should consider if they incrementally deploy this option to an existing Low-power/Lossy-Network (LLN).
 In addition, an operator would be unable to turn off enrollment traffic by sending a maximum value enrollment priority to the sub-DODAG.
-This situation is unfortunate, but without this option, the the situation would occur all over the DODAG, rather than just in the sub-DODAG that the option did not reach.
+This situation is unfortunate, but without this option, the situation would occur all over the DODAG, rather than just in the sub-DODAG that the option did not reach.
 
 # Security Considerations
 
