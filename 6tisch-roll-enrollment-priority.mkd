@@ -79,14 +79,14 @@ nearby router as a Join Proxy.
 ## Motivation and Overview
 
 It has become clear that not every routing member of the mesh ought to announce itself as a *Join Proxy*.
-There are a variety of local reasons for which a 6LowPAN router (6LR) might not want to provide the *Join Proxy* function.
+There are a variety of local reasons for which a 6LowPAN Router (6LR) might not want to provide the *Join Proxy* function.
 They include low available battery power, already high committed network bandwidth, and little free memory for Neighbor Cache Entry (NCE) slots.
 (An NCE entry is needed in order to maintain communication with the Pledge.)
 
-There are other situations where the operator of the network would like to selectively enable or disable the enrollment process in a specific DODAG.
+There are other situations where the operator of the network would like to selectively enable or disable the enrollment process in a specific Destination Oriented Directed Acyclic Graph (DODAG).
 In particular, as the enrollment process involves permitting unencrypted traffic into the best effort part of a network, it would be better to have the enrollment process off when no new nodes are expected.
 
-This document describes a RPL DIO option that can be used to set a minimum enrollment priority.
+This document describes a Routing Protocol for Low-Power and Lossy Networks (RPL) Destination Information Object (DIO) option that can be used to set a minimum enrollment priority.
 The minimum priority expresses the (lack of) willingness by the RPL DODAG globally to accept new joins.
 It may derive from multiple constraining factors, for instance, the size of the DODAG, the occupancy of the bandwidth at the DODAG Root, the memory capacity at the Root, or an administrative decision.
 Each potential *Join Proxy* utilizes this value as a base on which to add values relating to local conditions, such as its Rank and number of pending joins.
@@ -119,7 +119,7 @@ This term "Join" has to do with preferred parent selection processes.
 
 In order to avoid the ambiguity of this term, this document refers to the process (1)"Join" as enrollment, leaving the term "Join" to mean (2)"Join".
 The term "onboarding" (or "IoT Onboarding") is increasingly used to describe what was called enrollment in other documents.
-However, the term *Join Proxy* is retained with its meaning from {{!RFC9031}}.
+However, the term *Join Proxy* is retained with its (1)"Join" meaning from {{!RFC9031}}.
 
 
 # Protocol Definition
@@ -200,7 +200,7 @@ In order for this to happen, some significant congestion must be seen in the sub
 The 0x40 is only the half-way point, so if such an amount of congestion was present, then this sub-DODAG of the DODAG simply winds up being more cautious than it needed to be.
 
 It is possible that the temporal alternation of the above two situations might introduce cycles of accepting and then rejecting enrollment traffic.
-This is something an operator should consider if they incrementally deploy this option to an existing LLN.
+This is something an operator should consider if they incrementally deploy this option to an existing Low-power/Lossy-Network (LLN).
 In addition, an operator would be unable to turn off enrollment traffic by sending a maximum value enrollment priority to the sub-DODAG.
 This situation is unfortunate, but without this option, the the situation would occur all over the DODAG, rather than just in the sub-DODAG that the option did not reach.
 
