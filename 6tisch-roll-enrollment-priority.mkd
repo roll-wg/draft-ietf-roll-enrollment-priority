@@ -72,7 +72,7 @@ This document provides a mechanism by which a RPL DODAG Root can globally disabl
 # Introduction        {#problems}
 
 {{!RFC7554}} describes the use of the Time-Slotted Channel Hopping (TSCH) mode of {{ieee802154}}.
-{{!RFC9031}} and {{!RFC9032}} describe mechanisms by which a new node (the "pledge") can use a
+{{!RFC9031}} and {{!RFC9032}} describe mechanisms by which a new node (the "Pledge") can use a
 nearby router as a Join Proxy.
 {{!RFC9032}} describes an extension to the 802.15.4 Enhanced Beacon that is used by a Join Proxy to announce its existence such that Pledges can find them.
 
@@ -81,7 +81,7 @@ nearby router as a Join Proxy.
 It has become clear that not every routing member of the mesh ought to announce itself as a *Join Proxy*.
 There are a variety of local reasons for which a 6LowPAN router (6LR) might not want to provide the *Join Proxy* function.
 They include low available battery power, already high committed network bandwidth, and little free memory for Neighbor Cache Entry (NCE) slots.
-(An NCE entry is needed in order to maintain communication with the pledge.)
+(An NCE entry is needed in order to maintain communication with the Pledge.)
 
 There are other situations where the operator of the network would like to selectively enable or disable the enrollment process in a specific DODAG.
 In particular, as the enrollment process involves permitting unencrypted traffic into the best effort part of a network, it would be better to have the enrollment process off when no new nodes are expected.
@@ -213,7 +213,7 @@ In most deployments involving wireless technology, the layer-2 is always encrypt
 
 A malicious node that was part of the RPL control plane (i.e., had been enrolled into the layer-2 security) would be able to see these options and, based upon the observed minimal enrollment priority, could signal a confederate that it was a good time to send malicious join traffic.
 
-But, such a malicious node, being already part of the RPL control plane, could also send DIOs with a different minimal enrollment priority, which would cause downstream mesh routers to change their *Join Proxy*  behavior: lower minimal priorities would cause downstream nodes to accept more pledges than the network was expecting; higher minimal priorities could cause the enrollment process to stall.
+But, such a malicious node, being already part of the RPL control plane, could also send DIOs with a different minimal enrollment priority, which would cause downstream mesh routers to change their *Join Proxy*  behavior: lower minimal priorities would cause downstream nodes to accept more Pledges than the network was expecting; higher minimal priorities could cause the enrollment process to stall.
 
 The use of layer-2 or layer-3 security for RPL control messages prevents the two aforementioned attacks by non-participating nodes by preventing malicious nodes from becoming part of the control plane.
 However, a node that is attacked and has malware placed on it creates vulnerabilities in the same way such an attack on any node involved in Internet routing protocol does.
