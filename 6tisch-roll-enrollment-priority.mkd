@@ -208,14 +208,15 @@ This situation is unfortunate, but without this option, the the situation would 
 
 As per {{!RFC7416}}, RPL control frames either run over a secured layer 2 or use the {{!RFC6550}} Secure DIO methods.
 This option can be placed into either a "clear" (layer-2 secured) DIO or a layer-3 Secure DIO.
-As such, this option will have both integrity and confidentiality mechanisms applied to it.
 
-A malicious node that was part of the RPL control plane could see these options and, based upon the observed minimal enrollment priority, could signal a confederate that it was a good time to send malicious join traffic.
+In most deployments involving wireless technology, the layer-2 is always encrypted using a layer-2 specific technology, and so privacy of the this option is available.
 
-Such a malicious node, being already part of the RPL control plane, could also send DIOs with a different minimal enrollment priority, which would cause downstream mesh routers to change their *Join Proxy*  behavior: lower minimal priorities would cause downstream nodes to accept more pledges than the network was expecting; higher minimal priorities could cause the enrollment process to stall.
+A malicious node that was part of the RPL control plane (i.e., had been enrolled into the layer-2 security) would be able to see these options and, based upon the observed minimal enrollment priority, could signal a confederate that it was a good time to send malicious join traffic.
 
-The use of layer-2 or layer-3 security for RPL control messages prevents the two aforementioned attacks, by preventing malicious nodes from becoming part of the control plane.
-A node that is attacked and has malware placed on it creates vulnerabilities in the same way such an attack on any node involved in Internet routing protocol does.
+But, such a malicious node, being already part of the RPL control plane, could also send DIOs with a different minimal enrollment priority, which would cause downstream mesh routers to change their *Join Proxy*  behavior: lower minimal priorities would cause downstream nodes to accept more pledges than the network was expecting; higher minimal priorities could cause the enrollment process to stall.
+
+The use of layer-2 or layer-3 security for RPL control messages prevents the two aforementioned attacks by non-participating nodes by preventing malicious nodes from becoming part of the control plane.
+However, a node that is attacked and has malware placed on it creates vulnerabilities in the same way such an attack on any node involved in Internet routing protocol does.
 The rekeying provisions of {{!RFC9031}} exist to permit an operator to remove such nodes from the network easily.
 
 # Privacy Considerations
@@ -229,12 +230,8 @@ This entry should be called Minimum Enrollment Priority.
 
 # Acknowledgements
 
-This has been reviewed by Thomas Watteyne.
+This has been reviewed by Thomas Watteyne, Rifaat Shehk-Yusek,
 
 --- back
 
-# Change history
 
-version 00.
-
---- fluff
