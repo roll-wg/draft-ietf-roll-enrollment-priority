@@ -236,7 +236,7 @@ This entry should be called Minimum Enrollment Priority.
 
 # Acknowledgements
 
-This has been reviewed by Thomas Watteyne, Rifaat Shehk-Yusek,
+This has been reviewed by Thomas Watteyne, Rifaat Shehk-Yusek, Dave Thaler,
 
 --- back
 
