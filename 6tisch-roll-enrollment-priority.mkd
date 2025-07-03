@@ -87,7 +87,7 @@ There are other situations where the operator of the network would like to selec
 In particular, as the enrollment process involves permitting unencrypted traffic into the best effort part of a network, it would be better to have the enrollment process off when no new nodes are expected.
 
 This document describes a Routing Protocol for Low-Power and Lossy Networks (RPL) Destination Information Object (DIO) option that can be used to set a minimum enrollment priority.
-The minimum priority expresses the (lack of) willingness by the RPL DODAG globally to accept new joins.
+The minimum priority expresses the inability of the RPL DODAG globally to accept new joins.
 It may derive from multiple constraining factors, for instance, the size of the DODAG, the occupancy of the bandwidth at the DODAG Root, the memory capacity at the Root, or an administrative decision.
 Each potential *Join Proxy* utilizes this value as a base on which to add values relating to local conditions, such as its Rank and number of pending joins.
 As explained in {{!RFC9032}}, higher values decrease the likelihood of an unenrolled node sending enrollment traffic via this *Join Proxy*.
