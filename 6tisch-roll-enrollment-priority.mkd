@@ -118,7 +118,7 @@ In the context of the {{!RFC6550}} RPL protocol, the term (2)"Join" has an alter
 This term "Join" has to do with preferred parent selection processes.
 
 In order to avoid the ambiguity of this term, this document refers to the process (1)"Join" as enrollment, leaving the term "Join" to mean (2)"Join".
-The term "onboarding" (or "IoT Onboarding") is increasingly used to describe what is now called enrollment in other documents.
+The term "onboarding" (or "IoT Onboarding") is increasingly used to describe what is now called (1)Join in other documents, and is called enrollment in this document.
 However, the term *Join Proxy* is retained with its (1)"Join" meaning from {{!RFC9031}}.
 
 
