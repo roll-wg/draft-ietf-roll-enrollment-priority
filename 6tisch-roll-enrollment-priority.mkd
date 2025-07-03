@@ -109,7 +109,7 @@ If the contents represent an update that is considered important (e.g., quickly 
 The term 6LR means 6LowPAN Router, and is defined in {{?RFC6606}}.
 It refers to a router that forwards packets in a 6LowPAN network.
 
-The terms DODAG, DODAG root, DIO, trickle timer are from {{!RFC6550}}.
+The terms DAO, DODAG, DODAG root, DIO, trickle timer are from {{!RFC6550}}.
 The lollipop counter function comes from {{!RFC6550, Section 7.2}}.
 
 The term (1)"Join" has been used in documents such as {{!RFC9031}} to denote the activity of a new node authenticating itself to the network to obtain authorization to become a member of the network.
