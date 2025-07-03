@@ -65,7 +65,7 @@ informative:
 
 {{!RFC9032}} defines a method by which a potential {{!RFC9031}} enrollment proxy can announce itself as available for new Pledges to enroll on a network.
 The announcement includes a priority for enrollment.
-This document provides a mechanism by which a RPL DODAG Root can globally disable enrollment announcements or adjust the base priority for enrollment operations.
+This document provides a mechanism by which a  Routing Protocol for Low-Power and Lossy Networks (RPL) Root can globally disable enrollment announcements or adjust the base priority for enrollment operations.
 
 --- middle
 
@@ -80,8 +80,8 @@ nearby router as a Join Proxy.
 
 It has become clear that not every routing member of the mesh ought to announce itself as a *Join Proxy*.
 There are a variety of local reasons for which a 6LowPAN Router (6LR) might not want to provide the *Join Proxy* function.
-They include low available battery power, already high committed network bandwidth, and little free memory for Neighbor Cache Entry (NCE) slots.
-(An NCE entry is needed in order to maintain communication with the Pledge.)
+They include low available battery power, already high committed network bandwidth, and available free memory for Neighbor Cache Entry (NCE) slots.
+(An NCE entry is needed in order to maintain communication with the Pledge nodes trying to enroll)
 
 There are other situations where the operator of the network would like to selectively enable or disable the enrollment process in a specific Destination Oriented Directed Acyclic Graph (DODAG).
 In particular, as the enrollment process involves permitting unencrypted traffic into the best effort part of a network, it would be better to have the enrollment process off when no new nodes are expected.
