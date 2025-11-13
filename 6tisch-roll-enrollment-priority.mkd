@@ -35,12 +35,6 @@ author:
         email: pthubert@cisco.com
 
       -
-        ins: H. She
-        name: Huimin She
-        org: Cisco Systems
-        email: hushe@cisco.com
-
-      -
         ins: K. Iwanicki
         name: Konrad Iwanicki
         org: University of Warsaw
@@ -237,6 +231,8 @@ This entry should be called Minimum Enrollment Priority.
 # Acknowledgements
 
 This has been reviewed by Charlie Perkins, Rifaat Shehk-Yusek, Dave Thaler, and Thomas Watteyne.
+
+Huimin She contributed text about expressing the DODAG size.
 
 --- back
 
