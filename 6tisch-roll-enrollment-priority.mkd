@@ -31,8 +31,8 @@ author:
       -
         ins: P. Thubert
         name: Pascal Thubert
-        org: Cisco Systems
-        email: pthubert@cisco.com
+        org: Independent 
+        email: pascal.thubert@gmail.com
 
       -
         ins: K. Iwanicki
