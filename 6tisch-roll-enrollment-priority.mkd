@@ -237,10 +237,6 @@ The use of layer-2 or layer-3 security for RPL control messages prevents the two
 Nevertheless, a node that is attacked and has malware placed on it creates vulnerabilities in the same way such an attack on any node involved in Internet routing protocol does.
 The rekeying provisions of {{RFC9031}} exist to permit an operator to remove such nodes from the network.
 
-# Privacy Considerations
-
-There are no new privacy issues caused by this extension.
-
 # IANA Considerations
 
 Please allocate a new entry, TBD01 from Registry RPL Control Message Options at
