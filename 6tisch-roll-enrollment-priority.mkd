@@ -69,10 +69,23 @@ This document provides a mechanism by which a  Routing Protocol for Low-Power an
 
 # Introduction        {#problems}
 
-{{RFC7554}} describes the use of the Time-Slotted Channel Hopping (TSCH) mode of {{ieee802154}}.
-{{RFC9031}} and {{RFC9032}} describe mechanisms by which a new node (the "Pledge") can use a
-nearby router as a Join Proxy.
-{{RFC9032}} describes an extension to the 802.15.4 Enhanced Beacon that is used by a Join Proxy to announce its existence such that Pledges can find them.
+The adaption of the Time-Slotted Channel Hopping (TSCH) mode of
+{{ieee802154}} for use in 6TiSCH networks is described in {{RFC7554}}.
+The security and onboarding framework for these networks, described in
+{{RFC9031}} and {{RFC9032}}, allows a new node, known as a "Pledge", to utilize a nearby
+6LowPAN Router as a Join Proxy.
+
+To facilitate discovery, {{RFC9032}} specifies
+extensions to the IEEE 802.15.4 Enhanced Beacon that allow a Join Proxy to
+announce its presence, enabling Pledges to identify and select an
+appropriate entry point into the network.
+Currently, Join Proxies make local decisions about whether to facilitate a Pledge's  enrollment based only on their immediate resources.
+
+This document introduces Routing Protocol for Low-Power and Lossy Networks
+(RPL) extensions to ensure that enrollment remains orderly, prevents
+localized congestion at specific Join Proxies, and allows the network to
+stay within its operational capacity limits.
+
 
 ## Motivation and Overview
 
@@ -238,6 +251,7 @@ This entry should be called Minimum Enrollment Priority.
 This has been reviewed by Charlie Perkins, Rifaat Shehk-Yusek, Dave Thaler, and Thomas Watteyne.
 
 Huimin She contributed text about expressing the DODAG size.
+Ketan Talaulika was the responsible AD and provided many editoral improvements.
 
 --- back
 
