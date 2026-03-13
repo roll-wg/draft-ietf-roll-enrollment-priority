@@ -31,7 +31,7 @@ author:
       -
         ins: P. Thubert
         name: Pascal Thubert
-        org: Independent 
+        org: Independent
         email: pascal.thubert@gmail.com
 
       -
@@ -41,10 +41,8 @@ author:
         email: iwanicki@mimuw.edu.pl
 
 normative:
-  RFC2119:
   RFC7554:
   RFC6550:
-  RFC9032:
   RFC9031:
   RFC9032:
   ieee802154:
@@ -63,7 +61,7 @@ venue:
 
 --- abstract
 
-{{!RFC9032}} defines a method by which a potential {{!RFC9031}} enrollment proxy can announce itself as available for new RPL nodes to enroll on a network.
+{{RFC9032}} defines a method by which a potential {{RFC9031}} enrollment proxy can announce itself as available for new RPL nodes to enroll on a network.
 The announcement includes a priority for enrollment.
 This document provides a mechanism by which a  Routing Protocol for Low-Power and Lossy Networks (RPL) Root can globally disable enrollment announcements or adjust the base priority for enrollment operations.
 
@@ -71,17 +69,17 @@ This document provides a mechanism by which a  Routing Protocol for Low-Power an
 
 # Introduction        {#problems}
 
-{{!RFC7554}} describes the use of the Time-Slotted Channel Hopping (TSCH) mode of {{ieee802154}}.
-{{!RFC9031}} and {{!RFC9032}} describe mechanisms by which a new node (the "Pledge") can use a
+{{RFC7554}} describes the use of the Time-Slotted Channel Hopping (TSCH) mode of {{ieee802154}}.
+{{RFC9031}} and {{RFC9032}} describe mechanisms by which a new node (the "Pledge") can use a
 nearby router as a Join Proxy.
-{{!RFC9032}} describes an extension to the 802.15.4 Enhanced Beacon that is used by a Join Proxy to announce its existence such that Pledges can find them.
+{{RFC9032}} describes an extension to the 802.15.4 Enhanced Beacon that is used by a Join Proxy to announce its existence such that Pledges can find them.
 
 ## Motivation and Overview
 
 Not every routing member of a mesh ought to announce itself as a *Join Proxy*.
 There are a variety of local reasons for which a 6LowPAN Router (6LR) might not want to provide the *Join Proxy* function.
-Some reasons include low available battery power, already high committed network bandwidth, and lack of available free memory for Neighbor Cache Entry (NCE) slots.
-An NCE entry is needed in order to maintain communication with the Pledge nodes trying to enroll.
+Some reasons include low available battery power, already high committed network bandwidth, and lack of available free memory for Neighbor Cache Entry (NCE) slots {{?RFC4861, Section 5.1}}.
+An NCE is needed in order to maintain communication with the Pledge nodes trying to enroll.  See {{?RFC9898}} and {{?RFC6583}} for a deeper analysis of NCE exhaustion.
 
 There are other situations where the operator of the network would like to selectively enable or disable the enrollment process in a specific Destination Oriented Directed Acyclic Graph (DODAG).
 In particular, as the enrollment process involves permitting unencrypted traffic into the best effort part of a network, it would be better to turn the enrollment process off when no new nodes are expected.
@@ -90,7 +88,7 @@ This document describes a Routing Protocol for Low-Power and Lossy Networks (RPL
 The minimum priority expresses the inability of the RPL DODAG globally to accept new joins.
 It may derive from multiple constraining factors, for instance, the size of the DODAG, the occupancy of the bandwidth at the DODAG Root, the memory capacity at the Root, or an administrative decision.
 Each potential *Join Proxy* utilizes this value as a base on which to add values relating to local conditions, such as its Rank and number of pending joins.
-As explained in {{!RFC9032}}, higher values decrease the likelihood of an unenrolled node sending enrollment traffic via this *Join Proxy*.
+As explained in {{RFC9032}}, higher values decrease the likelihood of an unenrolled node sending enrollment traffic via this *Join Proxy*.
 In particular, by setting the minimum enrollment priority to the maximum value allowed, a network operator can globally disable all new enrollment traffic.
 
 Moreover, when a RPL domain is composed of multiple DODAGs, a node at the edge of more than one such DODAG may not only join any of the DODAGs but also move between them in order to keep their relative sizes balanced.
@@ -99,6 +97,7 @@ Depending on the network policy, the size of the DODAG may or may not affect the
 Therefore, since making one proportional to the other would be limiting their value, the current size of the DODAG is advertised separately in the new option.
 
 Updates to the option propagate through the network according to the trickle algorithm.
+{{!RFC6206}}
 The contents of the option are generated at the DODAG Root and do not change at any hop.
 If the contents represent an update that is considered important (e.g., quickly disabling any enrollments), the option can trigger trickle timer resets at the nodes to speed up its propagation.
 
@@ -109,22 +108,22 @@ If the contents represent an update that is considered important (e.g., quickly 
 The term 6LR means 6LowPAN Router, and is defined in {{?RFC6606}}.
 It refers to a router that forwards packets in a 6LowPAN network.
 
-The terms DAO, DODAG, DODAG root, DIO, trickle timer are from {{!RFC6550}}.
-The lollipop counter function comes from {{!RFC6550, Section 7.2}}.
+The terms DAO, DODAG, DODAG root, DIO, trickle timer are from {{RFC6550}}.
+The lollipop counter function comes from {{RFC6550, Section 7.2}}.
 
-The term (1)"Join" has been used in documents such as {{!RFC9031}} to denote the activity of a new node authenticating itself to the network to obtain authorization to become a member of the network.
+The term (1)"Join" has been used in documents such as {{RFC9031}} to denote the activity of a new node authenticating itself to the network to obtain authorization to become a member of the network.
 
-In the context of the {{!RFC6550}} RPL protocol, the term (2)"Join" has an alternative meaning: that of a node (already authenticated to the network, and already authorized to be a member of the network), deciding which part of the RPL DODAG to attach to.
+In the context of the {{RFC6550}} RPL protocol, the term (2)"Join" has an alternative meaning: that of a node (already authenticated to the network, and already authorized to be a member of the network), deciding which part of the RPL DODAG to attach to.
 This term "Join" has to do with preferred parent selection processes.
 
 In order to avoid the ambiguity of this term, this document refers to the process (1)"Join" as enrollment, leaving the term "Join" to mean (2)"Join".
 The term "onboarding" (or "IoT Onboarding") is increasingly used to describe what is now called (1)Join in other documents, and is called enrollment in this document.
-However, the term *Join Proxy* is retained with its (1)"Join" meaning from {{!RFC9031}}.
+However, the term *Join Proxy* is retained with its (1)"Join" meaning from {{RFC9031}}.
 
 
 # Protocol Definition
 
-This document uses the extensions mechanism specified by {{!RFC6550}}.
+This document uses the extensions mechanism specified by {{RFC6550}}.
 No mechanism is needed to enable it.
 
 ## Option Format
@@ -143,7 +142,7 @@ Type
 : To be assigned by IANA.
 
 Version Number
-: An 8-bit unsigned integer set by the DODAG root and denoting the version number of the contents of the option. The version number is interpreted as a lollipop counter (see Section 7.2 of {{!RFC6550}}).
+: An 8-bit unsigned integer set by the DODAG root and denoting the version number of the contents of the option. The version number is interpreted as a lollipop counter (see Section 7.2 of {{RFC6550}}).
 
 T
 : A bit indicating whether the particular version of the option is important in that adopting its contents should trigger a trickle timer reset at the node.
@@ -211,7 +210,7 @@ This situation is unfortunate, but without this option, the situation would occu
 
 # Security Considerations
 
-As per {{!RFC7416}}, RPL control frames either run over a secured layer 2 or use the {{!RFC6550}} Secure DIO methods at layer 3.
+As per {{!RFC7416}}, RPL control frames either run over a secured layer 2 or use the {{RFC6550}} Secure DIO methods at layer 3.
 This option can be placed into either a "clear" (layer-2 secured) DIO or a layer-3 Secure DIO.
 
 In most deployments involving wireless technology, layer 2 is always encrypted using a layer-2 specific technology, and so privacy of this option is available.
@@ -223,7 +222,7 @@ What is more, such a malicious node, being already part of the RPL control plane
 The use of layer-2 or layer-3 security for RPL control messages prevents the two aforementioned attacks by non-participating nodes by preventing malicious nodes from becoming part of the control plane.
 
 Nevertheless, a node that is attacked and has malware placed on it creates vulnerabilities in the same way such an attack on any node involved in Internet routing protocol does.
-The rekeying provisions of {{!RFC9031}} exist to permit an operator to remove such nodes from the network.
+The rekeying provisions of {{RFC9031}} exist to permit an operator to remove such nodes from the network.
 
 # Privacy Considerations
 
