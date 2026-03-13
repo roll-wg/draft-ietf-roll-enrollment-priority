@@ -77,7 +77,7 @@ nearby router as a Join Proxy.
 ## Motivation and Overview
 
 Not every routing member of a mesh ought to announce itself as a *Join Proxy*.
-There are a variety of local reasons for which a 6LowPAN Router (6LR) might not want to provide the *Join Proxy* function.
+There are a variety of local reasons for which a 6LowPAN Router (6LR) {{?RFC6066}} might not want to provide the *Join Proxy* function.
 Some reasons include low available battery power, already high committed network bandwidth, and lack of available free memory for Neighbor Cache Entry (NCE) slots {{?RFC4861, Section 5.1}}.
 An NCE is needed in order to maintain communication with the Pledge nodes trying to enroll.  See {{?RFC9898}} and {{?RFC6583}} for a deeper analysis of NCE exhaustion.
 
