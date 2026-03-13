@@ -41,7 +41,6 @@ author:
         email: iwanicki@mimuw.edu.pl
 
 normative:
-  RFC7554:
   RFC6550:
   RFC9031:
   RFC9032:
@@ -52,6 +51,7 @@ normative:
       ins: "IEEE standard for Information Technology"
 
 informative:
+  RFC7554:
 
 venue:
   group: roll
@@ -223,7 +223,7 @@ This situation is unfortunate, but without this option, the situation would occu
 
 # Security Considerations
 
-As per {{!RFC7416}}, RPL control frames either run over a secured layer 2 or use the {{RFC6550}} Secure DIO methods at layer 3.
+As per {{?RFC7416}}, RPL control frames either run over a secured layer 2 or use the {{RFC6550}} Secure DIO methods at layer 3.
 This option can be placed into either a "clear" (layer-2 secured) DIO or a layer-3 Secure DIO.
 
 In most deployments involving wireless technology, layer 2 is always encrypted using a layer-2 specific technology, and so privacy of this option is available.
