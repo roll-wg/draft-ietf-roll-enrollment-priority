@@ -243,8 +243,12 @@ There are no new privacy issues caused by this extension.
 
 # IANA Considerations
 
-Allocate a new number TBD01 from Registry RPL Control Message Options.
-This entry should be called Minimum Enrollment Priority.
+Please allocate a new entry, TBD01 from Registry RPL Control Message Options at
+https://www.iana.org/assignments/rpl/rpl.xhtml#control-message-options
+
+This entry should be called Minimum Enrollment Priority, and the reference should be to this document.
+
+
 
 # Acknowledgements
 
