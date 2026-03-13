@@ -59,7 +59,6 @@ venue:
   mail: roll@ietf.org
   github: roll-wg/voucher
 
-
 --- abstract
 
 {{RFC9032}} defines a method by which a potential {{RFC9031}} enrollment proxy can announce itself as available for new RPL nodes to enroll on a network.
