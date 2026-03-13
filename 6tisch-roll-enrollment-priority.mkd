@@ -201,25 +201,42 @@ The maximum resulting value any 6LR can obtain this way is 0x7f.
 
 The resulting priority, if less than 0x7f, should enable the *Join Proxy* function.
 
-## Upwards Compatibility
+# Operational Considerations
+
+The RPL ecosystem has not included management protocols to date.
+The future mechanisms of {{?I-D.ietf-roll-capabilities}} could enable assessment and configuration node features.
+
+While many deployments have been single vendor with consistent features, even within such an environment, incremental deployment of firmware updates might still cause feature skew among nodes.
+
+It is therefore necessary to consider how the lack of this metric container can be compensated for nodes further away from the root.
+Given the current lack of a configuration mechanism for RPL,  appropriate defaults need to be established.
+
+## Incremental deployment Considerations
 
 A 6LR that did not support this option would not act on it or propagate it in its DIO messages.
-In effect, the 6LR's subtree nodes could not receive any telemetry.
+In effect, the 6LR's subtree below a node without support for this option could not receive any telemetry.
 Therefore, 6LRs that support this option but do not receive it via any path SHOULD assume a default value of 0x40 as their base value for the Enhanced Beacon Join Priority.
+This value has been chosen to allow for the best reaction.
 
 A 6LR downstream of a 6LR where there was such an interruption in the telemetry could err in two directions:
 
 * If the value implied by the base value of 0x40 was too low, then the 6LR might continue to attract enrollment traffic when none should have been collected.
-This is a stressor for the network, but this would also be what would occur without this option at all.
+This is a stressor for the network, but the similiar behaviour would occur if no option existed.
 
 * If the value implied by the base value of 0x40 was too high, then the 6LR might deflect enrollment traffic to other parts of the DODAG, possibly refusing any enrollment traffic at all.
-In order for this to happen, some significant congestion must be seen in the sub-DODAG where the implied 0x40 was introduced.
+
+In order for this to happen, some significant congestion must exist in the sub-DODAG where the implied 0x40 was introduced.
 The 0x40 is only the half-way point, so if such an amount of congestion was present, then this sub-DODAG of the DODAG simply winds up being more cautious than it needed to be.
 
-It is possible that the temporal alternation of the above two situations might introduce cycles of accepting and then rejecting enrollment traffic.
+There is an additional possibility of having more than one interruption in telemetry if multiple nodes in the DODAG were lacking a firmware update to enable this option.
+Such alternation of the above two situations might introduce cycles of accepting and then rejecting enrollment traffic.
+
 This is something an operator should consider if they incrementally deploy this option to an existing Low-power/Lossy-Network (LLN).
-In addition, an operator would be unable to turn off enrollment traffic by sending a maximum value enrollment priority to the sub-DODAG.
+
+In addition, due to these interruptions, an operator would be unable to turn off enrollment traffic by sending a maximum value enrollment priority to the sub-DODAG.
 This situation is unfortunate, but without this option, the situation would occur all over the DODAG, rather than just in the sub-DODAG that the option did not reach.
+So this problem is not a new problem.
+
 
 # Security Considerations
 
