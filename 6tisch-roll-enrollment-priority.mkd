@@ -176,10 +176,10 @@ Version Number
 : An 8-bit unsigned integer set by the DODAG root and denoting the version number of the contents of the option. The version number is interpreted as a lollipop counter (see Section 7.2 of {{RFC6550}}).  This is abbreviated as VR below.
 
 T
-: A bit indicating whether the particular version of the option is important in that adopting its contents should trigger a trickle timer reset at the node.
+: A bit indicating whether the particular version of the option is important in that adopting its contents should trigger a trickle timer {{RFC6206, Section 4.2}} reset at the node {{RFC6550, Section 8.3}}
 
 Min Priority
-: A 7-bit field providing a base value for the Enhanced Beacon Join priority.  A value of 0x7f (127) disables the *Join Proxy* function entirely.
+: The minimum enrollmenet priority.  This is a 7-bit field providing a base value for the Enhanced Beacon Join priority.  A value of 0x7f (127) is considered infinity, and this disables the *Join Proxy* function entirely.
 
 Exp
 : A 4-bit unsigned integer indicating the power of 2 that defines the unit of the DODAG Size, such that (unit = 2^Exp).
@@ -195,6 +195,11 @@ In such a case, it represents the number of routes not the number of nodes, and 
 As the DODAG Size is always a multiple of a power of 2, when the actual size falls between two such values, the DODAG Root is to always round up.
 
 In any case, the DODAG Size may slightly change between one DIO and the next, so the value transmitted is considered as an approximation.
+
+A 6LR node uses the contents of this option from whichever parent it selects as the basis for the option that it sends.
+When that parent increments its minimum priority above the previous value that was seen, then this MUST be considered an "inconsistent" value for the purposes of the trickle  timer.
+A parent that decrements its minimum priority to a lower value MAY be considered "inconsistent", or a node MAY wait retransmit according to the trickle timer's redundancy constant.
+This is consistent with paragraph one of {{RFC6550, Section 8.3}}, which considers lower Rank to be consistent.
 
 ## Option Processing
 
