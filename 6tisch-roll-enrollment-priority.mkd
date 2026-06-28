@@ -235,6 +235,8 @@ Note that the calculated local value *vl* does *not* update the value *vr* in th
 The RPL ecosystem has not included a management protocols to date.
 A future mechanisms, such as {{?I-D.ietf-roll-capabilities}} could enable assessment and configuration of node features.
 If/when such a thing became available, a node would still need to be connected before it configuration parameters could be adjusted.
+Until such a mechanism becomes available, the only way an operator can change any defaults in the node is via a custom firmware load, or a vendor proprietary mechanism. For instance, a vendor might do this via custom programming of a configuration section in memory using some kind of cable.
+This kind of per-node tuning is very expensive to do, and runs counter to the goals of zero-touch mechanisms.
 
 RPL nodes therefore need to come with sensible defaults that allow a node to join a DODAG.  Many current deployments have been single vendor with consistent features and well-tested defaults.
 However, even within such an environment, incremental deployment of firmware updates might still cause feature skew among nodes.
