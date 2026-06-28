@@ -194,8 +194,6 @@ In such a case, it represents the number of routes not the number of nodes, and 
 
 As the DODAG Size is always a multiple of a power of 2, when the actual size falls between two such values, the DODAG Root is to always round up.
 
-Future work such as {{?I-D.ietf-roll-capabilities}} will enable collection of capabilities such as this one in reports to the DODAG Root.
-
 In any case, the DODAG Size may slightly change between one DIO and the next, so the value transmitted is considered as an approximation.
 
 ## Option Processing
