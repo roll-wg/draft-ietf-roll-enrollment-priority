@@ -105,28 +105,31 @@ For instance, in storing-mode and mixed {{dao-projection}} mode LLNs, routing ta
 
 Enrollment of new nodes into the DODAG involves having the Join Proxy forward traffic from unknown nodes into the DODAG.
 These unknown nodes are not yet known to be trustworthy, the introduction of a lot of traffic from could be part of a denial of service attack.
+
 This extension includes a mechanism to allow the network operator to send a signal that no new nodes are expected at that time, and for all join proxy operations to be turned off by forcing the enrollment priority to the maximum (worst) value.
 
 The RPL Destination Information Object (DIO) option described here contains new metrics that propogate down the DODAG, informing each layer of the conditions in the DODAG above the node.
 
-This enrollment priority is used by each 6LR node to determine whether or not it will operate as a *Join Proxy* for nodes that want to enroll.
+This new metric, the minimum enrollment priority, is updated by each 6LR to reflect conditions in that 6LR.
+This metric is only increased based upon local conditions, and the new value is sent as within the DIO that this node emits.
+Additionally, this new metric forms the basis for the `proxy priority` described in {{?RFC9032}}.
+
+The minumum enrollment priority value is derived from multiple constraining factors, for instance, the size of the DODAG, the occupancy of the bandwidth at the DODAG Root, the memory capacity at the Root, or an administrative decision.
+
+This minimum enrollment priority is used by each 6LR node to determine whether or not it will operate as a *Join Proxy* for nodes that want to enroll.
 For nodes which are already enrolled, but which need to reconnect to a DODAG, the DODAG Size information helps the node decide between different DODAGs which might be visible.
 
-The minimum enrollment priority expresses the ability of RPL DODAG globally to accept new joins:
-lower numerical priority values indicate increased ability to accept new child nodes.
+This minimum enrollment priority expresses the ability of RPL DODAG globally to accept new joins: lower numerical priority values indicate increased ability to accept new child nodes.
 
-This value is  derived from multiple constraining factors, for instance, the size of the DODAG, the occupancy of the bandwidth at the DODAG Root, the memory capacity at the Root, or an administrative decision.
-Each potential *Join Proxy* utilizes this value as a base on which to increment the values relating to local conditions, such as its Rank and number of pending joins.
-
-Moreover, when a RPL domain is composed of multiple DODAGs, a node at the edge of more than one such DODAG may join any of the DODAGs it sees.  It can also use this information to move between DODAGs in order to help keep the relative sizes balanced.
+Moreover, when a RPL domain is composed of multiple DODAGs, a node at the edge of more than one such DODAG may join any of the DODAGs it sees.
+It can also use this information to move between DODAGs in order to help keep the relative sizes balanced.
 For this, the approximate knowledge of the size of the DODAGs is also an essential metric.
 Depending on the network policy, the size of the DODAG may or may not affect the minimum enrollment priority.
 Therefore, since making one proportional to the other would be limiting their value, the current size of the DODAG is advertised separately in the new option.
 
 Updates to the option propagate through the network according to the trickle algorithm.
 {{!RFC6206}}
-The contents of the option are generated at the DODAG Root, and are not changed.
-Each 6LR a local value for the enrollment priority, and does not update it until the trickle timer time.
+Other than the minimum enrollment priority value, the contents of the option are generated at the DODAG Root, and are not changed.
 
 If the contents represent an update that is considered important (e.g., quickly disabling any enrollments), the option can trigger trickle timer resets at the nodes to speed up its propagation.
 
