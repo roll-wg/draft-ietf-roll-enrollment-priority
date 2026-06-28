@@ -52,6 +52,7 @@ normative:
 
 informative:
   RFC7554:
+  dao-projection: I-D.ietf-roll-dao-projection
 
 venue:
   group: roll
@@ -60,9 +61,15 @@ venue:
 
 --- abstract
 
-{{RFC9032}} defines a method by which a potential {{RFC9031}} enrollment proxy can announce itself as available for new RPL nodes to enroll on a network.
-The announcement includes a priority for enrollment.
-This document provides a mechanism by which a  Routing Protocol for Low-Power and Lossy Networks (RPL) Root can globally disable enrollment announcements or adjust the base priority for enrollment operations.
+The Routing Protocol for Low-Power and Lossy Networks (RPL) manages the
+routing topology but lacks a mechanism to globally regulate how many new nodes,
+known as Pledges, can join a node in a 6TiSCH network at any given time. Currently,
+Join Proxies (6LowPAN Routers) make local decisions about whether to facilitate a
+Pledge's enrollment based only on their immediate resources.
+
+This document introduces RPL extensions to ensure that enrollment
+remains orderly, prevents localized congestion at specific Join Proxies, and allows the
+network to stay within its operational capacity limits.
 
 --- middle
 
@@ -89,28 +96,47 @@ stay within its operational capacity limits.
 ## Motivation and Overview
 
 Not every routing member of a mesh ought to announce itself as a *Join Proxy*.
-There are a variety of local reasons for which a 6LowPAN Router (6LR) {{?RFC6066}} might not want to provide the *Join Proxy* function.
-Some reasons include low available battery power, already high committed network bandwidth, and lack of available free memory for Neighbor Cache Entry (NCE) slots {{?RFC4861, Section 5.1}}.
+The constructed Destination Oriented Directed Acyclic Graph (DODAG) can become unbalanced if many nodes join in one part.
+This can be the result of optimization decisions based upon local information only.
+If nodes could get more information about the global view, then they could make different choices that would result in more balanced resource usage.
+
+There are a variety of local metrics which a 6LowPAN Router (6LR) {{?RFC6066}} can use to determine if it should provide the *Join Proxy* function.
+These reasons include low available battery power, already high committed network bandwidth, and lack of available free memory for Neighbor Cache Entry (NCE) slots {{?RFC4861, Section 5.1}}.
 An NCE is needed in order to maintain communication with the Pledge nodes trying to enroll.  See {{?RFC9898}} and {{?RFC6583}} for a deeper analysis of NCE exhaustion.
 
-There are other situations where the operator of the network would like to selectively enable or disable the enrollment process in a specific Destination Oriented Directed Acyclic Graph (DODAG).
-In particular, as the enrollment process involves permitting unencrypted traffic into the best effort part of a network, it would be better to turn the enrollment process off when no new nodes are expected.
+In addition to the local per-node constraints, if the network around a 6LR is congested
+then adding more nodes to that part of the network would make the congestion worse.
+The attachment might not even succeed if other non-local resources are in short supply.
+For instance, in storing-mode and mixed {{dao-projection}} mode LLNs, routing table entries at other levels could become exhausted.
 
-This document describes a Routing Protocol for Low-Power and Lossy Networks (RPL) Destination Information Object (DIO) option that can be used to set a minimum enrollment priority.
-The minimum priority expresses the inability of the RPL DODAG globally to accept new joins.
-It may derive from multiple constraining factors, for instance, the size of the DODAG, the occupancy of the bandwidth at the DODAG Root, the memory capacity at the Root, or an administrative decision.
-Each potential *Join Proxy* utilizes this value as a base on which to add values relating to local conditions, such as its Rank and number of pending joins.
-As explained in {{RFC9032}}, higher values decrease the likelihood of an unenrolled node sending enrollment traffic via this *Join Proxy*.
-In particular, by setting the minimum enrollment priority to the maximum value allowed, a network operator can globally disable all new enrollment traffic.
+Enrollment of new nodes into the DODAG involves having the Join Proxy forward traffic from unknown nodes into the DODAG.
+These unknown nodes are not yet known to be trustworthy, the introduction of a lot of traffic from could be part of a denial of service attack.
 
-Moreover, when a RPL domain is composed of multiple DODAGs, a node at the edge of more than one such DODAG may not only join any of the DODAGs but also move between them in order to keep their relative sizes balanced.
+This extension includes a mechanism to allow the network operator to send a signal that no new nodes are expected at that time, and for all join proxy operations to be turned off by forcing the minimum enrollment priority to the maximum (worst) value.
+
+The RPL Destination Information Object (DIO) option described here contains new metrics that propogate down the DODAG, informing each layer of the conditions in the DODAG above the node.
+
+This new metric, the minimum enrollment priority, is updated by each 6LR to reflect conditions in that 6LR.
+This metric is only increased based upon local conditions, and the new value is sent as within the DIO that this node emits.
+Additionally, this new metric forms the basis for the `proxy priority` described in {{RFC9032}}.
+
+The minumum enrollment priority value is derived from multiple constraining factors, for instance, the size of the DODAG, the occupancy of the bandwidth at the DODAG Root, the memory capacity at the Root, or an administrative decision.
+
+This minimum enrollment priority is used by each 6LR node to determine whether or not it will operate as a *Join Proxy* for nodes that want to enroll.
+For nodes which are already enrolled, but which need to reconnect to a DODAG, the DODAG Size information helps the node decide between different DODAGs which might be visible.
+
+This minimum enrollment priority expresses the ability of RPL DODAG globally to accept new joins: lower numerical priority values indicate increased ability to accept new child nodes.
+
+Moreover, when a RPL domain is composed of multiple DODAGs, a node at the edge of more than one such DODAG may join any of the DODAGs it sees.
+It can also use this information to move between DODAGs in order to help keep the relative sizes balanced.
 For this, the approximate knowledge of the size of the DODAGs is also an essential metric.
 Depending on the network policy, the size of the DODAG may or may not affect the minimum enrollment priority.
 Therefore, since making one proportional to the other would be limiting their value, the current size of the DODAG is advertised separately in the new option.
 
 Updates to the option propagate through the network according to the trickle algorithm.
 {{!RFC6206}}
-The contents of the option are generated at the DODAG Root and do not change at any hop.
+Other than the minimum enrollment priority value, the contents of the option are generated at the DODAG Root, and are not changed.
+
 If the contents represent an update that is considered important (e.g., quickly disabling any enrollments), the option can trigger trickle timer resets at the nodes to speed up its propagation.
 
 # Terminology          {#Terminology}
@@ -132,11 +158,10 @@ In order to avoid the ambiguity of this term, this document refers to the proces
 The term "onboarding" (or "IoT Onboarding") is increasingly used to describe what is now called (1)Join in other documents, and is called enrollment in this document.
 However, the term *Join Proxy* is retained with its (1)"Join" meaning from {{RFC9031}}.
 
-
 # Protocol Definition
 
 This document uses the extensions mechanism specified by {{RFC6550}}.
-No mechanism is needed to enable it.
+As explained in {{operationalconsiderations}}, no mechanism is needed to enable it.
 
 ## Option Format
 
@@ -154,13 +179,13 @@ Type
 : To be assigned by IANA.
 
 Version Number
-: An 8-bit unsigned integer set by the DODAG root and denoting the version number of the contents of the option. The version number is interpreted as a lollipop counter (see Section 7.2 of {{RFC6550}}).
+: An 8-bit unsigned integer set by the DODAG root and denoting the version number of the contents of the option. The version number is interpreted as a lollipop counter (see Section 7.2 of {{RFC6550}}).  This is abbreviated as VR below.
 
 T
-: A bit indicating whether the particular version of the option is important in that adopting its contents should trigger a trickle timer reset at the node.
+: A bit indicating whether the particular version of the option is important in that adopting its contents should trigger a trickle timer {{RFC6206, Section 4.2}} reset at the node {{RFC6550, Section 8.3}}
 
 Min Priority
-: A 7-bit field providing a base value for the Enhanced Beacon Join priority.  A value of 0x7f (127) disables the *Join Proxy* function entirely.
+: The minimum enrollment priority.  This is a 7-bit field providing a base value for the Enhanced Beacon Join priority.  A value of 0x7f (127) is considered infinity, and this disables the *Join Proxy* function entirely.
 
 Exp
 : A 4-bit unsigned integer indicating the power of 2 that defines the unit of the DODAG Size, such that (unit = 2^Exp).
@@ -175,17 +200,20 @@ In such a case, it represents the number of routes not the number of nodes, and 
 
 As the DODAG Size is always a multiple of a power of 2, when the actual size falls between two such values, the DODAG Root is to always round up.
 
-Future work such as {{?I-D.ietf-roll-capabilities}} will enable collection of capabilities such as this one in reports to the DODAG Root.
-
 In any case, the DODAG Size may slightly change between one DIO and the next, so the value transmitted is considered as an approximation.
+
+A 6LR node uses the contents of this option from whichever parent it selects as the basis for the option that it sends.
+When that parent increments its minimum enrollment priority above the previous value that was seen, then this MUST be considered an "inconsistent" value for the purposes of the trickle  timer.
+A parent that decrements its minimum enrollment priority to a lower value MAY be considered "inconsistent", or a node MAY wait retransmit according to the trickle timer's redundancy constant.
+This is consistent with paragraph one of {{RFC6550, Section 8.3}}, which considers lower Rank to be consistent.
 
 ## Option Processing
 
 The contents of the option MUST be generated by the DODAG Root.
 A 6LR MUST NOT change the option when propagating it.
 
-Whenever the DODAG root changes the values of Min Priority or DODAG Size in the option, it MUST also increment the value of Version Number.
-Moreover, if the change is considered important (i.e., it is expected to propagate in the DODAG quickly), the DODAG Root SHOULD also set the T bit to 1; otherwise, it MUST set the bit to 0.
+Whenever the DODAG root changes the values of the minimum enrollment priority or DODAG Size in the option, it MUST also increment the value of Version Number.
+Moreover, if the change is considered important (i.e., it is expected to propagate in the DODAG quickly), the DODAG Root MUST also set the T bit to 1; otherwise, it MUST set the bit to 0.
 
 Upon receiving the option, a 6LR first checks the value of the Version Number field in the option, *vr*, versus the value of the Version Number it has last adopted locally, *vl*.
 
@@ -194,30 +222,39 @@ Upon receiving the option, a 6LR first checks the value of the Version Number fi
 * Otherwise, the 6LR MUST adopt the contents of the option (i.e., the values of Version Number, Min Priority, DODAG Size, and the T bit) as its local ones.
 Moreover, if *vl* was smaller than *vr* (in the lollipop counter order) and the T bit in the received option was set, then the 6LR MUST reset its DIO trickle timer.
 
-A 6LR, which would otherwise be willing to act as a *Join Proxy*, will examine the locally adopted value of Min Priority and to that number add any additional local consideration (such as upstream congestion, number of NCE slots available, etc.).
+A 6LR, which would otherwise be willing to act as a *Join Proxy*, will examine the locally adopted value of minimum enrollment priority and to that number add any additional local consideration (such as upstream congestion, number of NCE slots available, etc.).
 
 The maximum resulting value any 6LR can obtain this way is 0x7f.
 
-The resulting priority, if less than 0x7f, should enable the *Join Proxy* function.
+The resulting minimum enrollment priority, if less than 0x7f, should enable the *Join Proxy* function.
 
-# Operational Considerations
+Note that the calculated local value *vl* does *not* update the value *vr* in the option.
 
-The RPL ecosystem has not included management protocols to date.
-The future mechanisms of {{?I-D.ietf-roll-capabilities}} could enable assessment and configuration node features.
+# Operational Considerations {#operationalconsiderations}
 
-While many deployments have been single vendor with consistent features, even within such an environment, incremental deployment of firmware updates might still cause feature skew among nodes.
+The RPL ecosystem has not included a management protocols to date.
+A future mechanisms, such as {{?I-D.ietf-roll-capabilities}} could enable assessment and configuration of node features.
+If/when such a thing became available, a node would still need to be connected before it configuration parameters could be adjusted.
+Until such a mechanism becomes available, the only way an operator can change any defaults in the node is via a custom firmware load, or a vendor proprietary mechanism. For instance, a vendor might do this via custom programming of a configuration section in memory using some kind of cable.
+This kind of per-node tuning is very expensive to do, and runs counter to the goals of zero-touch mechanisms.
+
+RPL nodes therefore need to come with sensible defaults that allow a node to join a DODAG.  Many current deployments have been single vendor with consistent features and well-tested defaults.
+However, even within such an environment, incremental deployment of firmware updates might still cause feature skew among nodes.
+
+Intermediate nodes in a DODAG might not be upgraded at the same time as nodes further down the leaf, and therefore might not support this new metric container.
 
 It is therefore necessary to consider how the lack of this metric container can be compensated for nodes further away from the root.
-Given the current lack of a configuration mechanism for RPL,  appropriate defaults need to be established.
 
 ## Incremental deployment Considerations
 
 A 6LR that did not support this option would not act on it or propagate it in its DIO messages.
-In effect, the 6LR's subtree below a node without support for this option could not receive any telemetry.
-Therefore, 6LRs that support this option but do not receive it via any path SHOULD assume a default value of 0x40 as their base value for the Enhanced Beacon Join Priority.
-This value has been chosen to allow for the best reaction.
+In effect, the 6LR's subtree below a node without support for this option could not receive any information about the DODAG size or minimum enrollment priority.
+In the absense of of this metric, a 6LR will need to base decisions on how to act based upon information about local resources only.
 
-A 6LR downstream of a 6LR where there was such an interruption in the telemetry could err in two directions:
+This document therefore establishes that a 6LRs that support this option but do not receive it via any path SHOULD assume a default value of 0x40 as their base value for the Enhanced Beacon Join Priority.
+This half-way value has been chosen to allow for the best reaction.
+
+A 6LR downstream of a 6LR where there was such an interruption in the metric could err in two directions:
 
 * If the value implied by the base value of 0x40 was too low, then the 6LR might continue to attract enrollment traffic when none should have been collected.
 This is a stressor for the network, but the similiar behaviour would occur if no option existed.
@@ -227,10 +264,8 @@ This is a stressor for the network, but the similiar behaviour would occur if no
 In order for this to happen, some significant congestion must exist in the sub-DODAG where the implied 0x40 was introduced.
 The 0x40 is only the half-way point, so if such an amount of congestion was present, then this sub-DODAG of the DODAG simply winds up being more cautious than it needed to be.
 
-There is an additional possibility of having more than one interruption in telemetry if multiple nodes in the DODAG were lacking a firmware update to enable this option.
-Such alternation of the above two situations might introduce cycles of accepting and then rejecting enrollment traffic.
-
-This is something an operator should consider if they incrementally deploy this option to an existing Low-power/Lossy-Network (LLN).
+There is an additional possibility of having more than one interruption of information if multiple nodes in the DODAG were lacking a firmware update to enable this option.
+Such alternation of the above two situations might introduce some pathology of cycles of accepting and then rejecting enrollment traffic:  This is something an operator should  consider if they incrementally deploy this option to an existing Low-power/Lossy-Network (LLN).
 
 In addition, due to these interruptions, an operator would be unable to turn off enrollment traffic by sending a maximum value enrollment priority to the sub-DODAG.
 This situation is unfortunate, but without this option, the situation would occur all over the DODAG, rather than just in the sub-DODAG that the option did not reach.
