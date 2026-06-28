@@ -118,7 +118,7 @@ The RPL Destination Information Object (DIO) option described here contains new 
 
 This new metric, the minimum enrollment priority, is updated by each 6LR to reflect conditions in that 6LR.
 This metric is only increased based upon local conditions, and the new value is sent as within the DIO that this node emits.
-Additionally, this new metric forms the basis for the `proxy priority` described in {{?RFC9032}}.
+Additionally, this new metric forms the basis for the `proxy priority` described in {{RFC9032}}.
 
 The minumum enrollment priority value is derived from multiple constraining factors, for instance, the size of the DODAG, the occupancy of the bandwidth at the DODAG Root, the memory capacity at the Root, or an administrative decision.
 
