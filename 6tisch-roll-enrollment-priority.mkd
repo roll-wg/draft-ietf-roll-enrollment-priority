@@ -114,14 +114,14 @@ These unknown nodes are not yet known to be trustworthy, the introduction of a l
 
 This extension includes a mechanism to allow the network operator to send a signal that no new nodes are expected at that time, and for all join proxy operations to be turned off by forcing the minimum enrollment priority to the maximum (worst) value.
 
-The RPL Destination Information Object (DIO) option described here contains new metrics that propogate down the DODAG, informing each layer of the conditions in the DODAG above the node.
+The RPL Destination Information Object (DIO) option described here contains new metrics that propagate down the DODAG, informing each layer of the conditions in the DODAG above the node.
 
 This new metric, the minimum enrollment priority, is updated by each 6LR to reflect conditions in that 6LR.
 This metric is only increased based upon local conditions, and the new value is sent as within the DIO that this node emits.
 Additionally, this new metric forms the basis for the `proxy priority` described in {{RFC9032}}.
-Section {{optionformat}} explaines how these fields affect the Trickle Timer.
+Section {{optionformat}} explains how these fields affect the Trickle Timer.
 
-The minumum enrollment priority value is derived from multiple constraining factors, for instance, the size of the DODAG, the occupancy of the bandwidth at the DODAG Root, the memory capacity at the Root, or an administrative decision.
+The minimum enrollment priority value is derived from multiple constraining factors, for instance, the size of the DODAG, the occupancy of the bandwidth at the DODAG Root, the memory capacity at the Root, or an administrative decision.
 
 This minimum enrollment priority is used by each 6LR node to determine whether or not it will operate as a *Join Proxy* for nodes that want to enroll.
 For nodes which are already enrolled, but which need to reconnect to a DODAG, the DODAG Size information helps the node decide between different DODAGs which might be visible.
@@ -171,7 +171,7 @@ The following option is defined for transmission in DIOs issued by the DODAG Roo
         0                   1                   2                   3
         0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       | Type = TBD01  |Opt Length = 4 |Version Number |T| Min Priority|
+       | Type = TBD01  |Opt Length = 5 |Version Number |T| Min Priority|
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
        |  Exp  |DODAGSz|
        +-+-+-+-+-+-+-+-+
@@ -205,7 +205,7 @@ In any case, the DODAG Size may slightly change between one DIO and the next, so
 
 A 6LR node uses the contents of this option from whichever parent it selects as the basis for the option that it sends.
 When that parent increments its minimum enrollment priority above the previous value that was seen, then this MUST be considered an "inconsistent" value for the purposes of the trickle timer.
-A parent that decrements its minimum enrollment priority to a lower value MAY be considered "inconsistent", or a node MAY wait retransmit according to the trickle timer's redundancy constant.
+A parent that decrements its minimum enrollment priority to a lower value MAY be considered "inconsistent", or a node MAY wait re-transmit according to the trickle timer's redundancy constant.
 This is consistent with paragraph one of {{RFC6550, Section 8.3}}, which considers lower Rank to be consistent.
 
 ## Option Processing
@@ -249,8 +249,8 @@ It is therefore necessary to consider how the lack of this metric container can 
 ## Incremental deployment Considerations
 
 A 6LR that did not support this option would not act on it or propagate it in its DIO messages.
-In effect, the 6LR's subtree below a node without support for this option could not receive any information about the DODAG size or minimum enrollment priority.
-In the absense of of this metric, a 6LR will need to base decisions on how to act based upon information about local resources only.
+In effect, the 6LR's sub-tree below a node without support for this option could not receive any information about the DODAG size or minimum enrollment priority.
+In the absence of of this metric, a 6LR will need to base decisions on how to act based upon information about local resources only.
 
 This document therefore establishes that a 6LRs that support this option but do not receive it via any path SHOULD assume a default value of 0x40 as their base value for the Enhanced Beacon Join Priority.
 This half-way value has been chosen to allow for the best reaction.
@@ -258,7 +258,7 @@ This half-way value has been chosen to allow for the best reaction.
 A 6LR downstream of a 6LR where there was such an interruption in the metric could err in two directions:
 
 * If the value implied by the base value of 0x40 was too low, then the 6LR might continue to attract enrollment traffic when none should have been collected.
-This is a stressor for the network, but the similiar behaviour would occur if no option existed.
+This is a stressor for the network, but the similar behaviour would occur if no option existed.
 
 * If the value implied by the base value of 0x40 was too high, then the 6LR might deflect enrollment traffic to other parts of the DODAG, possibly refusing any enrollment traffic at all.
 
@@ -287,7 +287,7 @@ What is more, such a malicious node, being already part of the RPL control plane
 The use of layer-2 or layer-3 security for RPL control messages prevents the two aforementioned attacks by non-participating nodes by preventing malicious nodes from becoming part of the control plane.
 
 Nevertheless, a node that is attacked and has malware placed on it creates vulnerabilities in the same way such an attack on any node involved in Internet routing protocol does.
-The rekeying provisions of {{RFC9031}} exist to permit an operator to remove such nodes from the network.
+The re-keying provisions of {{RFC9031}} exist to permit an operator to remove such nodes from the network.
 
 # IANA Considerations
 
@@ -303,7 +303,7 @@ This entry should be called Minimum Enrollment Priority, and the reference shoul
 This has been reviewed by Charlie Perkins, Rifaat Shehk-Yusek, Dave Thaler, and Thomas Watteyne.
 
 Huimin She contributed text about expressing the DODAG size.
-Ketan Talaulika was the responsible AD and provided many editoral improvements.
+Ketan Talaulika was the responsible AD and provided many editorial improvements.
 
 --- back
 
