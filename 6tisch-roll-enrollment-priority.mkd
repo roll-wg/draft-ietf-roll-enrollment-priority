@@ -1,7 +1,7 @@
 ---
 title: Controlling Network Enrollment in RPL networks
 abbrev: join-metric
-docname: draft-ietf-roll-enrollment-priority-17
+docname: draft-ietf-roll-enrollment-priority-18
 
 ipr: trust200902
 area: Internet
