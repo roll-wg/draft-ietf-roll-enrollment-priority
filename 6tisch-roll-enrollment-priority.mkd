@@ -100,7 +100,7 @@ The constructed Destination Oriented Directed Acyclic Graph (DODAG) can become u
 This can be the result of optimization decisions based upon local information only.
 If nodes could get more information about the global view, then they could make different choices that would result in more balanced resource usage.
 
-There are a variety of local metrics which a 6LowPAN Router (6LR) {{?RFC6066}} can use to determine if it should provide the *Join Proxy* function.
+There are a variety of local metrics which a 6LowPAN Router (6LR) {{?RFC6606}} can use to determine if it should provide the *Join Proxy* function.
 These reasons include low available battery power, already high committed network bandwidth, and lack of available free memory for Neighbor Cache Entry (NCE) slots {{?RFC4861, Section 5.1}}.
 An NCE is needed in order to maintain communication with the Pledge nodes trying to enroll.  See {{?RFC9898}} and {{?RFC6583}} for a deeper analysis of NCE exhaustion.
 
