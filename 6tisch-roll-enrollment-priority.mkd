@@ -278,7 +278,8 @@ So this problem is not a new problem.
 As per {{?RFC7416}}, RPL control frames either run over a secured layer 2 or use the {{RFC6550}} Secure DIO methods at layer 3.
 This option can be placed into either a "clear" (layer-2 secured) DIO or a layer-3 Secure DIO.
 
-In most deployments involving wireless technology, layer 2 is always encrypted using a layer-2 specific technology, and so privacy of this option is available.
+As always, if the ROLL protocol is used in an environment where unauthorized access to  the physical links on which ROLL packets are sent occurs, then attacks are possible.
+However, in most deployments involving wireless technology, the layer 2 is encrypted and integrity protected using a layer-2 specific technology.
 
 However, a malicious node that was part of the RPL control plane (i.e., had been enrolled into the layer-2 security) would be able to see the values of this option and, based upon the observed minimal enrollment priority, could signal a confederate that it was a good time to send malicious join traffic.
 
