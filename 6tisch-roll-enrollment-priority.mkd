@@ -100,9 +100,21 @@ The constructed Destination Oriented Directed Acyclic Graph (DODAG) can become u
 This can be the result of optimization decisions based upon local information only.
 If nodes could get more information about the global view, then they could make different choices that would result in more balanced resource usage.
 
-There are a variety of local metrics which a 6LowPAN Router (6LR) {{?RFC6606}} can use to determine if it should provide the *Join Proxy* function.
-These reasons include low available battery power, already high committed network bandwidth, and lack of available free memory for Neighbor Cache Entry (NCE) slots {{?RFC4861, Section 5.1}}.
-An NCE is needed in order to maintain communication with the Pledge nodes trying to enroll.  See {{?RFC9898}} and {{?RFC6583}} for a deeper analysis of NCE exhaustion.
+There are a variety of local metrics which a 6LowPAN Router (6LR) {{?RFC6606}} can use to determine whether or not it should provide the *Join Proxy* function.
+
+Being a Join Proxy requires that the node operate at a higher duty cycle,
+so if (battery) power is low, then a node might decide to conserve that power.
+
+6TISCH nodes operate their radio according to a duty cycle that involves being active at a predictable schedule (and on a preditable frequency).
+6TISCH nodes can negotiate more bandwidth via additional slots (see {{?RFC8480}}),
+and additional onboarding traffic can require more bandwidth.
+However, there is a limit to how much can be added, and more slots requires more power.
+
+Communication with any child node, whether it is already onboarded or is a propective Pledge, requires that a Neighbor Cache Entry (NCE) be available to store the
+Neighbor Discovery results.
+On constrained devices, the amount of memory available for NCEs is usually limited.
+If a node has few (or none) left, then it will be unable to communicate with any additional nodes, so it should not perform the Join Proxy function.
+See {{?RFC9898}} and {{?RFC6583}} for a deeper analysis of NCE exhaustion.
 
 In addition to the local per-node constraints, if the network around a 6LR is congested
 then adding more nodes to that part of the network would make the congestion worse.
