@@ -88,7 +88,7 @@ appropriate entry point into the network.
 Currently, Join Proxies make local decisions about whether to facilitate a Pledge's  enrollment based only on their immediate resources.
 
 This document introduces Routing Protocol for Low-Power and Lossy Networks
-(RPL) {{!RFC6550}} extensions to ensure that enrollment remains orderly, prevents
+(RPL) {{RFC6550}} extensions to ensure that enrollment remains orderly, prevents
 localized congestion at specific Join Proxies, and allows the network to
 stay within its operational capacity limits.
 
@@ -130,7 +130,7 @@ In addition to the local per-node constraints, if the network around a 6LR is co
 then adding more nodes to that part of the network would make the congestion worse.
 
 This applies both to not-yet onboarded Pledges, but also to nodes that are already onboarded, but which may have moved.
-(Movement can be the result of physical movement, but also to changing radio environments, such as metal doors opening/closing: see {{RFC7416, Section 4.3}} and Section 7.3.5)
+(Movement can be the result of physical movement, but also to changing radio environments, such as metal doors opening/closing: see {{Sections 4.3 and 7.3.5 of RFC7416}}.
 
 The RPL attachment might not even succeed if other non-local resources are in short supply.
 For instance, in storing-mode and mixed {{dao-projection}} mode LLNs, routing table entries at other levels of the DODAG could already be exhausted.
