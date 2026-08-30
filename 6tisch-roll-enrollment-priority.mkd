@@ -88,26 +88,52 @@ appropriate entry point into the network.
 Currently, Join Proxies make local decisions about whether to facilitate a Pledge's  enrollment based only on their immediate resources.
 
 This document introduces Routing Protocol for Low-Power and Lossy Networks
-(RPL) extensions to ensure that enrollment remains orderly, prevents
+(RPL) {{RFC6550}} extensions to ensure that enrollment remains orderly, prevents
 localized congestion at specific Join Proxies, and allows the network to
 stay within its operational capacity limits.
 
 
 ## Motivation and Overview
 
-Not every routing member of a mesh ought to announce itself as a *Join Proxy*.
-The constructed Destination Oriented Directed Acyclic Graph (DODAG) can become unbalanced if many nodes join in one part.
-This can be the result of optimization decisions based upon local information only.
-If nodes could get more information about the global view, then they could make different choices that would result in more balanced resource usage.
+RPL constructs a Destination Oriented Directed Acyclic Graph (DODAG).
+This is a tree shape, which expands to accomodate more and more nodes at the bottom.
+An ideal tree is balanced: with each layer of the tree having between two and a dozen child nodes.  But, ideal trees do not often occur, and the three can be unbalanced if many nodes join in one part.
 
-There are a variety of local metrics which a 6LowPAN Router (6LR) {{?RFC6066}} can use to determine if it should provide the *Join Proxy* function.
-These reasons include low available battery power, already high committed network bandwidth, and lack of available free memory for Neighbor Cache Entry (NCE) slots {{?RFC4861, Section 5.1}}.
-An NCE is needed in order to maintain communication with the Pledge nodes trying to enroll.  See {{?RFC9898}} and {{?RFC6583}} for a deeper analysis of NCE exhaustion.
+This can sometimes be the result of optimization decisions based upon local information  only.
+If nodes could get more information about the global view, then they could make different choices (pick different parents) that would result in more balanced resource usage.
+
+When a new Pledge wishes to onboard to the DODAG, it requires the help of an existing node.
+This function is a called a *Join Proxy*, and it functions to connect new Pledge nodes to the DODAG.
+New Pledges do not have the network encryption and integrity keys, so can not communicate using RPL.
+The purpose of the Join Proxy is to transfer unencrypted packets from the Pledge to the secured RPL network, sending them up to the Join/Registrar Coordinator (see {{?RFC9030}}, {{?RFC9301}}, and {{?RFC8995}}).
+{{?I-D.ietf-anima-constrained-join-proxy}} describes additional ways that a join proxy can be constructed.
+
+However, operating as Join Proxy comes with a cost: code space, volatile memory usage, network bandwidth, and most importantly: power consumption.
+
+There are a variety of local metrics which a 6LowPAN Router (6LR) {{?RFC6606}} can use to determine whether or not it has the capacity to provide the Join Proxy function.
+
+Being a Join Proxy requires that the node operate at a higher duty cycle,
+so if (battery) power is low, then a node might decide to conserve that power.
+
+6TISCH nodes operate their radio according to a duty cycle that involves being active at a predictable schedule (and on a preditable frequency).
+6TISCH nodes can negotiate more bandwidth via additional slots (see {{?RFC8480}}),
+and additional onboarding traffic can require more bandwidth.
+However, there is a limit to how much can be added, and more slots require a higher duty cycle, therefore more power.
+
+Communication with any child node, whether it is already onboarded or is a propective Pledge, requires that a Neighbor Cache Entry (NCE) be available to store the
+Neighbor Discovery results.
+On constrained devices, the amount of memory available for NCEs is usually limited.
+If a node has few (or none) left, then it will be unable to communicate with any additional nodes, so it should not perform the Join Proxy function.
+See {{?RFC9898}} and {{?RFC6583}} for a deeper analysis of NCE exhaustion.
 
 In addition to the local per-node constraints, if the network around a 6LR is congested
 then adding more nodes to that part of the network would make the congestion worse.
-The attachment might not even succeed if other non-local resources are in short supply.
-For instance, in storing-mode and mixed {{dao-projection}} mode LLNs, routing table entries at other levels could become exhausted.
+
+This applies both to not-yet onboarded Pledges, but also to nodes that are already onboarded, but which may have moved.
+(Movement can be the result of physical movement, but also to changing radio environments, such as metal doors opening/closing: see {{Sections 4.3 and 7.3.5 of RFC7416}}.
+
+The RPL attachment might not even succeed if other non-local resources are in short supply.
+For instance, in storing-mode and mixed {{dao-projection}} mode LLNs, routing table entries at other levels of the DODAG could already be exhausted.
 
 Enrollment of new nodes into the DODAG involves having the Join Proxy forward traffic from unknown nodes into the DODAG.
 These unknown nodes are not yet known to be trustworthy, the introduction of a lot of traffic from could be part of a denial of service attack.
@@ -234,16 +260,16 @@ Note that the calculated local value *vl* does *not* update the value *vr* in th
 # Operational Considerations {#operationalconsiderations}
 
 The RPL ecosystem has not included a management protocols to date.
-A future mechanisms, such as {{?I-D.ietf-roll-capabilities}} could enable assessment and configuration of node features.
-If/when such a thing became available, a node would still need to be connected before it configuration parameters could be adjusted.
-Until such a mechanism becomes available, the only way an operator can change any defaults in the node is via a custom firmware load, or a vendor proprietary mechanism. For instance, a vendor might do this via custom programming of a configuration section in memory using some kind of cable.
+Future mechanisms could bring such a thing, however, even when such a thing is available, a node would still need to be connected before it configuration parameters could be adjusted.
+The only way an operator can change any defaults in the node is via a custom firmware load, or a vendor proprietary mechanism. For instance, a vendor might do this via custom programming of a configuration section in memory using some kind of cable.
 This kind of per-node tuning is very expensive to do, and runs counter to the goals of zero-touch mechanisms.
 
-RPL nodes therefore need to come with sensible defaults that allow a node to join a DODAG.  Many current deployments have been single vendor with consistent features and well-tested defaults.
-However, even within such an environment, incremental deployment of firmware updates might still cause feature skew among nodes.
+RPL nodes therefore need to come with defaults that allow a node to join a DODAG, at least as a leaf node.
+Once joined, in-band configuration can become possible.
+
+While many current deployments have been single vendor with consistent features and well-tested defaults, even within such an environment, incremental deployment of firmware updates might still cause feature skew among nodes.
 
 Intermediate nodes in a DODAG might not be upgraded at the same time as nodes further down the leaf, and therefore might not support this new metric container.
-
 It is therefore necessary to consider how the lack of this metric container can be compensated for nodes further away from the root.
 
 ## Incremental deployment Considerations
@@ -278,7 +304,8 @@ So this problem is not a new problem.
 As per {{?RFC7416}}, RPL control frames either run over a secured layer 2 or use the {{RFC6550}} Secure DIO methods at layer 3.
 This option can be placed into either a "clear" (layer-2 secured) DIO or a layer-3 Secure DIO.
 
-In most deployments involving wireless technology, layer 2 is always encrypted using a layer-2 specific technology, and so privacy of this option is available.
+As always, if the ROLL protocol is used in an environment where unauthorized access to  the physical links on which ROLL packets are sent occurs, then attacks are possible.
+However, in most deployments involving wireless technology, the layer 2 is encrypted and integrity protected using a layer-2 specific technology.
 
 However, a malicious node that was part of the RPL control plane (i.e., had been enrolled into the layer-2 security) would be able to see the values of this option and, based upon the observed minimal enrollment priority, could signal a confederate that it was a good time to send malicious join traffic.
 
