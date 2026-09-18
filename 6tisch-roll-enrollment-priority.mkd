@@ -64,7 +64,7 @@ venue:
 The Routing Protocol for Low-Power and Lossy Networks (RPL) manages the
 routing topology but lacks a mechanism to globally regulate how many new nodes,
 known as Pledges, can join a node in a 6TiSCH network at any given time. Currently,
-Join Proxies (6LowPAN Routers) make local decisions about whether to facilitate a
+Join Proxies (6LoWPAN Routers) make local decisions about whether to facilitate a
 Pledge's enrollment based only on their immediate resources.
 
 This document introduces RPL extensions to ensure that enrollment
@@ -79,7 +79,7 @@ The adaption of the Time-Slotted Channel Hopping (TSCH) mode of
 {{ieee802154}} for use in 6TiSCH networks is described in {{RFC7554}}.
 The security and onboarding framework for these networks, described in
 {{RFC9031}} and {{RFC9032}}, allows a new node, known as a "Pledge", to utilize a nearby
-6LowPAN Router as a Join Proxy.
+6LoWPAN Router as a Join Proxy.
 
 To facilitate discovery, {{RFC9032}} specifies
 extensions to the IEEE 802.15.4 Enhanced Beacon that allow a Join Proxy to
@@ -100,7 +100,7 @@ The constructed Destination Oriented Directed Acyclic Graph (DODAG) can become u
 This can be the result of optimization decisions based upon local information only.
 If nodes could get more information about the global view, then they could make different choices that would result in more balanced resource usage.
 
-There are a variety of local metrics which a 6LowPAN Router (6LR) {{?RFC6066}} can use to determine if it should provide the *Join Proxy* function.
+There are a variety of local metrics which a 6LoWPAN Router (6LR) {{?RFC6066}} can use to determine if it should provide the *Join Proxy* function.
 These reasons include low available battery power, already high committed network bandwidth, and lack of available free memory for Neighbor Cache Entry (NCE) slots {{?RFC4861, Section 5.1}}.
 An NCE is needed in order to maintain communication with the Pledge nodes trying to enroll.  See {{?RFC9898}} and {{?RFC6583}} for a deeper analysis of NCE exhaustion.
 
@@ -110,7 +110,7 @@ The attachment might not even succeed if other non-local resources are in short 
 For instance, in storing-mode and mixed {{dao-projection}} mode LLNs, routing table entries at other levels could become exhausted.
 
 Enrollment of new nodes into the DODAG involves having the Join Proxy forward traffic from unknown nodes into the DODAG.
-These unknown nodes are not yet known to be trustworthy, the introduction of a lot of traffic from could be part of a denial of service attack.
+These unknown nodes are not yet known to be trustworthy; the introduction of a lot of traffic from them could be part of a denial of service attack.
 
 This extension includes a mechanism to allow the network operator to send a signal that no new nodes are expected at that time, and for all join proxy operations to be turned off by forcing the minimum enrollment priority to the maximum (worst) value.
 
@@ -144,8 +144,8 @@ If the contents represent an update that is considered important (e.g., quickly 
 
 {::boilerplate bcp14}
 
-The term 6LR means 6LowPAN Router, and is defined in {{?RFC6606}}.
-It refers to a router that forwards packets in a 6LowPAN network.
+The term 6LR means 6LoWPAN Router, and is defined in {{?RFC6606}}.
+It refers to a router that forwards packets in a 6LoWPAN network.
 
 The terms DAO, DODAG, DODAG root, DIO, trickle timer are from {{RFC6550}}.
 The lollipop counter function comes from {{RFC6550, Section 7.2}}.
