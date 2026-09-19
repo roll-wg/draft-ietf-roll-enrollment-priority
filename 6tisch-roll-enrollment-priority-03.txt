@@ -133,7 +133,7 @@ Internet-DraftControlling Secure Network Enrollment in RPLSeptember 2020
    have the enrollment process off when no new nodes are expected.
 
    A network operator might also be able to recognize when certain parts
-   of the network are overloaded and can not accomodate additional
+   of the network are overloaded and can not accommodate additional
    enrollment traffic, and it would like to adjust the enrollment
    priority (the proxy priority field of
    [I-D.ietf-6tisch-enrollment-enhanced-beacon]) among all nodes in the
