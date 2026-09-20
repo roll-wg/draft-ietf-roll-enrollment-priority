@@ -205,6 +205,9 @@ The following option is defined for transmission in DIOs issued by the DODAG Roo
 Type
 : To be assigned by IANA.
 
+Opt Length
+: This is the length in bytes for the option, not including the type and lenth.  This length is fixed in this document to be three bytes.  An amendment to this document could increase the size to include additional fields.
+
 Version Number
 : An 8-bit unsigned integer set by the DODAG root and denoting the version number of the contents of the option. The version number is interpreted as a lollipop counter (see Section 7.2 of {{RFC6550}}).
 
