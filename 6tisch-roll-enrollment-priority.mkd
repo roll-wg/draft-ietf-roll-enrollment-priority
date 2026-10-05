@@ -214,7 +214,7 @@ Version Number
 : An 8-bit unsigned integer set by the DODAG root and denoting the version number of the contents of the option. The version number is interpreted as a lollipop counter (see Section 7.2 of {{RFC6550}}).
 
 T
-: A bit indicating whether the particular version of the option is important in that adopting its contents should trigger a trickle timer {{RFC6206, Section 4.2}} reset at the node {{RFC6550, Section 8.3}}
+: A bit indicating whether the particular version of the option is important. Adopting its contents should trigger a trickle timer {{RFC6206, Section 4.2}} reset at the node {{RFC6550, Section 8.3}}, immediately sending out new information.
 
 Min Priority
 : The minimum enrollment priority.  This is a 7-bit field. A value of 0x7f (127) is considered infinity, and this disables the *Join Proxy* function entirely.
