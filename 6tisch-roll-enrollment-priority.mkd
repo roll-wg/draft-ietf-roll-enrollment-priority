@@ -179,12 +179,16 @@ The terms DAO, DODAG, DODAG root, DIO, and trickle timer are from {{RFC6550}}.
 The lollipop counter function comes from {{RFC6550, Section 7.2}}.
 
 The term (1)"Join" has been used in documents such as {{RFC9031}} to denote the activity of a new node authenticating itself to the network to obtain authorization to become a member of the network.
+Since that document was published, the industry has moved to using the "onboarding" for that activity.
+The term "enrollment" is also used to mean the same thing, and that term is preferred in this document.
 
 In the context of the {{RFC6550}} RPL protocol, the term (2)"Join" has an alternative meaning: that of a node (already authenticated to the network, and already authorized to be a member of the network), deciding which part of the RPL DODAG to attach to.
 This term "Join" has to do with preferred parent selection processes.
 
-In order to avoid the ambiguity of this term, this document refers to the process (1)"Join" as enrollment, leaving the term "Join" to mean (2)"Join".
-The term "onboarding" (or "IoT Onboarding") is increasingly used to describe what is now called (1)Join in other documents, and is called enrollment in this document.
+As this document deals with both Onboarding of new devices, as well as determining where an existing device can reattach to a network, both meanings for that term are needed in this document.
+
+In order to avoid the ambiguity of this term, this document refers to the process (1)"Join" as onboarding/enrollment, leaving the term "Join" to mean (2)"Join".
+
 However, the term *Join Proxy* is retained with its (1)"Join" meaning from {{RFC9031}}.
 
 # Protocol Definition
