@@ -252,7 +252,7 @@ Upon receiving the option, a 6LR first checks the value of the Version Number fi
 * If *vl* is greater than *vr* (in the lollipop counter order), then the 6LR MUST ignore the received option.
 
 * Otherwise, the 6LR MUST adopt the contents of the option (i.e., the values of Version Number, Min Priority, DODAG Size, and the T bit) as its local ones.
-Moreover, if *vl* was smaller than *vr* (in the lollipop counter order) and the T bit in the received option was set, then the 6LR MUST reset its DIO trickle timer.
+Moreover, if *vl* was smaller than *vr* (in the lollipop counter order) and the T bit in the received option was set to 1, then the 6LR MUST reset its DIO trickle timer.
 
 A 6LR, which would otherwise be willing to act as a *Join Proxy*, will examine the locally adopted value of minimum enrollment priority and to that number add any additional local consideration (such as upstream congestion, number of NCE slots available, etc.).
 
